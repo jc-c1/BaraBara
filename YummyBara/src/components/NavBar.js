@@ -4,11 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Ionicons } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
-import UserProfile from '../../user/userProfile'
-import StoryScreen from '../../../pages/StoryScreen'
-import StoryDetailScreen from '../../../pages/StoryDetailScreen'
-import StoryCreatorScreen from '../../../pages/StoryCreatorScreen'
-import BackImg from '../../../components/readingScreen/BackImg'
+
+
+
+
+// import BackImg from '../../../components/readingScreen/BackImg'
 
 const Tab = createBottomTabNavigator()
 
@@ -51,7 +51,7 @@ function AdventureStackScreen () {
           title: 'Start Your Adventure!'
         }}
       />
-      <AdventureStack.Screen
+      {/* <AdventureStack.Screen
         name='Background'
         component={BackImg}
         options={{
@@ -60,7 +60,7 @@ function AdventureStackScreen () {
           title: 'Your Adventure!',
           headerBackTitle: 'Back'
         }}
-      />
+      /> */}
     </AdventureStack.Navigator>
   )
 }

@@ -11,6 +11,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
+
 /* global require */
 
 import { auth } from '../../config/firebase'
@@ -18,7 +19,7 @@ import { auth } from '../../config/firebase'
 export const LogIn = ({ setPage }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const logoImg = require('../../assets/Img/AppIcon.jpeg')
+  const logoImg = require('../../../assets/Img/CapybaraLogo.png')
 
   const loginUser = () => {
     signInWithEmailAndPassword(auth, email, password)
