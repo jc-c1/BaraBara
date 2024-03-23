@@ -1,0 +1,13 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "/.babelrc"
+            ],
+            "url": "https://json.schemastore.org/babelrc"
+        }
+    ],
+    "files.associations": {
+        ".babelrc": "json"
+    }
+}

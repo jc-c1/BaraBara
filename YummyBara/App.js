@@ -1,19 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { StatusBar } from 'expo-status-bar'
+import { StyleSheet, Text, View } from 'react-native'
+import { Auth } from './src/components/auth/auth'
 import CameraScreen from './src/screens/CameraScreen';
 
-const Stack = createStackNavigator();
 
-export default function App() {
-  
+export default function App () {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Camera" component={CameraScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    <View style={styles.container}>
+      <Text>Open up App.js to start working on your app!!!!!</Text>
+      <StatusBar style='auto' />
+    </View>
+  )
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
 
