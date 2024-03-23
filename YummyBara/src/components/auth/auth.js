@@ -10,7 +10,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 
 import { LogIn } from './logIn'
 import { SignUp } from './signUp'
-import { NavBar } from './NavBar'
+import { NavBar } from '../NavBar'
 
 import { auth } from '../../config/firebase'
 
