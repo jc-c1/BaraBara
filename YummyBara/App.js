@@ -1,4 +1,3 @@
-
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
 import { Auth } from './src/components/auth/auth'
@@ -22,3 +21,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 })
+
