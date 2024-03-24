@@ -3,7 +3,7 @@ import { signOut } from 'firebase/auth'
 import Color from '../Color'
 import { auth } from '../../config/firebase'
 
-export const SignOut = () => {
+export const SignOutButton = () => {
   const logoImg = require('../../../assets/Img/CapybaraLogo.png')
   const signout = () => {
     signOut(auth)
@@ -18,7 +18,7 @@ export const SignOut = () => {
   return (
     <View>
       <View style={styles.imageContainer}>
-      <Image source={logoImg} style={styles.logoImage} resizeMode='cover' />
+        <Image source={logoImg} style={styles.logoImage} resizeMode='cover' />
       </View>
       <View style={styles.alignContainer}>
         <View style={styles.imageOverlay}>
@@ -58,12 +58,12 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     maxWidth: 120
   },
-  imageContainer :{
+  imageContainer: {
     paddingBottom: 15
   },
   logoImage: {
     width: 120,
-    height: 120,
+    height: 120
   },
   imageOverlay: {
     position: 'absolute',
