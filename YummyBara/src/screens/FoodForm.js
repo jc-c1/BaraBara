@@ -25,7 +25,7 @@ const FoodForm = ({route}) => {
     useEffect(() => {
       
         const fetchInfo = async (imageUri) => {
-          const image_data = await FileSystem.readAsStringAsync("/Users/shiyuli/Desktop/codes/BaraBara/YummyBara/assets/IMG_3994.jpg", { encoding: FileSystem.EncodingType.Base64 });
+          const image_data = await FileSystem.readAsStringAsync("/Users/kellychen/Desktop/hackathons/bcsHack2024/BaraBara/YummyBara/assets/IMG_3994.jpg", { encoding: FileSystem.EncodingType.Base64 });
             try {
                 // call kelly's function with imageUri, then set foodList
                 let infoObj = await FoodPrediction(image_data);
