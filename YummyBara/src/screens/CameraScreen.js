@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Modal, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Modal } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +16,10 @@ export default function CameraScreen() {
     const cameraRef = useRef(null);
     const navigation = useNavigation();
     const [isModalVisible, setModalVisible] = useState(false);
+
+    const [meal, setMeal] = useState(null);
+    const [isModalVisible, setModalVisible] = useState(false);
+
 
     //Ask for permission to access Media Library and Camera
     useEffect(() => {
@@ -56,12 +60,15 @@ export default function CameraScreen() {
             try {
                 await MediaLibrary.createAssetAsync(image);
                 setModalVisible(true);
-            } catch (e) {
-                console.log(e);
-            }
-        }
-    }
-
+                //console.log(base64Image);
+                //setBase64Image(null);
+                //setImage(null);
+                //navigation.navigate('Roboflow', { base64: base64Image },);       
+                //base64Image = the base64 of image the app just took!!!!
+    const handleMealSelection = (mealType) => {
+        setModalVisible(false);
+        navigation.navigate('NextScreen', { meals: mealType.toLowerCase(), base64: base64Image });
+    };
 
     return (
         <View style={styles.container}>
@@ -110,11 +117,38 @@ export default function CameraScreen() {
                         <CameraButton title={'Take a picture'} icon="camera" onPress={takePicture} />
                     </View>
                     :
-                    <View style={styles.buttonRow}>
-                        <CameraButton title={'Retake'} icon="retweet" onPress={() => setImage(null)} />
-                        <View style={{ width: 30 }} />
-                        <CameraButton title={'Save'} icon="upload" onPress={saveImage} />
+                    <View>
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={isModalVisible}
+                            onRequestClose={() => {
+                                setModalVisible(!isModalVisible);
+                            }}
+                        >
+                            <View style={styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    <Text style={styles.modalText}>Which meal is this?</Text>
+                                    {['Breakfast', 'Lunch', 'Dinner', 'Snack'].map((mealType) => (
+                                        <TouchableOpacity
+                                            key={mealType}
+                                            style={styles.mealButton}
+                                            onPress={() => handleMealSelection(mealType)}
+                                        >
+                                            <Text style={styles.textStyle}>{mealType}</Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </View>
+                            </View>
+                        </Modal>
+                        <View style={styles.buttonRow}>
+                            <CameraButton title={'Retake'} icon="retweet" onPress={() => setImage(null)} />
+                            <View style={{ width: 30 }} />
+                            <CameraButton title={'Save & Analyze'} icon="upload" onPress={saveImage} />
+                        </View>
+
                     </View>
+
                 }
             </View>
         </View>
@@ -134,7 +168,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        paddingBottom: 50,
+        paddingBottom: 30,
     },
     camera: {
         flex: 1,
@@ -166,8 +200,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 22,
-      },
-      modalView: {
+    },
+    modalView: {
         margin: 20,
         backgroundColor: 'white',
         borderRadius: 20,
@@ -175,34 +209,34 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-      },
-      mealButton: {
+    },
+    mealButton: {
         borderRadius: 20,
         padding: 10,
         elevation: 2,
         backgroundColor: Color.gradientPink,
         marginTop: 10,
-        width: 150
-      },
-      textStyle: {
+
+    },
+    textStyle: {
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
-      },
-      modalText: {
-        borderRadius: 5,
-        fontSize: 24,
-        color: Color.textBrown,
-        fontWeight: "bold",
+        fontSize: 15,
+    },
+    modalText: {
         marginBottom: 15,
         textAlign: 'center',
-      },
+        color: Color.textBrown,
+        fontWeight: '800',
+        fontSize: 20,
+    },
 });
 
 

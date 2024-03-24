@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Ionicons } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
+import { StyleSheet } from 'react-native';
 import Profile from "../screens/Profile"
 import Home from '../screens/Home'
 import CameraScreen from '../screens/CameraScreen'
@@ -46,7 +47,7 @@ export const PageNavigation = () => {
           component={Home}
           options={{
             tabBarIcon: ({ color }) => (
-              <FontAwesome5 name='home' size={24} color={color} />
+              <FontAwesome5 name='home' size={24} color={color} style={styles.icons}/>
             ),
             tabBarLabel: 'Home',
             headerStyle: { backgroundColor:  Color.navPink }, 
@@ -61,10 +62,10 @@ export const PageNavigation = () => {
           name='CameraScreen'
           component={CameraScreen}
           options={{
-            tabBarLabel: 'CameraScreen',
+            tabBarLabel: 'Camera',
             tabBarIcon: ({ color }) => (
               
-              <FontAwesome5 name="camera" size={24} color={color} />
+              <FontAwesome5 name="camera" size={24} color={color} style={styles.icons} />
             ),
             // headerStyle: { backgroundColor: '#d8a7a9' },
             headerShown: false
@@ -76,7 +77,7 @@ export const PageNavigation = () => {
           component={Profile}
           options={{
             tabBarIcon: ({ color }) => (
-              <Ionicons name='person-sharp' size={24} color={color} />
+              <Ionicons name='person-sharp' size={24} color={color} style={styles.icons}/>
             ),
             headerStyle: { backgroundColor:  Color.navPink },
             title: 'Profile',
@@ -92,7 +93,11 @@ export const PageNavigation = () => {
 }
 
 
-
+const styles = StyleSheet.create({
+  icons: {
+    marginTop: 15,
+  }
+})
 
 
 // const MainStack = createNativeStackNavigator()
