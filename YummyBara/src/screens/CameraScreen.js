@@ -16,7 +16,6 @@ export default function CameraScreen() {
     const cameraRef = useRef(null);
     const navigation = useNavigation();
 
-    const [meal, setMeal] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
 
 
@@ -59,11 +58,6 @@ export default function CameraScreen() {
             try {
                 await MediaLibrary.createAssetAsync(image);
                 setModalVisible(true);
-                //console.log(base64Image);
-                //setBase64Image(null);
-                //setImage(null);
-                //navigation.navigate('Roboflow', { base64: base64Image },);       
-                //base64Image = the base64 of image the app just took!!!!
             } catch (e) {
                 console.log(e);
             }
