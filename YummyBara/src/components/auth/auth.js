@@ -65,6 +65,7 @@ export const Auth = () => {
               </View>
             </View>
 
+
             <View style={styles.containerBox}>
               {page == 'login' ? (
                 <LogIn setPage={setPage} />
