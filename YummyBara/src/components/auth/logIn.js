@@ -5,21 +5,16 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Image
 } from 'react-native'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-
+import Color from '../Color'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-
-
-/* global require */
 
 import { auth } from '../../config/firebase'
 
 export const LogIn = ({ setPage }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const logoImg = require('../../../assets/Img/CapybaraLogo.png')
 
   const loginUser = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -33,10 +28,7 @@ export const LogIn = ({ setPage }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.profileContainer}>
-        <Image source={logoImg} style={styles.logoImage} resizeMode='contain' />
-      </View>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Welcome</Text>
       <View style={styles.inputboxes}>
         <View style={styles.usernamePasswordBox}>
           <MaterialIcons name='alternate-email' size={20} color='#666' />
@@ -60,11 +52,11 @@ export const LogIn = ({ setPage }) => {
         </View>
 
         <Text style={styles.signUp}>
-        New to Dreamland?{'  '}
-        <Text style={styles.signUpText} onPress={() => setPage('signup')}>
-          Sign Up
+          Don't have an account? {'  '}
+          <Text style={styles.signUpText} onPress={() => setPage('signup')}>
+            Join us!
+          </Text>
         </Text>
-      </Text>
 
         <View style={styles.LogInBox}>
           <TouchableOpacity style={{ flex: 1 }} onPress={loginUser}>
@@ -91,8 +83,10 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     marginTop: 6,
     padding: 12,
-    backgroundColor: '#F2F2F2',
-    borderRadius: 10
+    backgroundColor: '#FEFEFE',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#863441'
   },
   LogInBox: {
     alignItems: 'center',
@@ -101,8 +95,14 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     marginTop: 6,
     padding: 12,
-    backgroundColor: '#e8979a',
-    borderRadius: 10
+    backgroundColor: Color.navPink,
+    borderRadius: 10,
+    // borderWidth: 1,
+    // borderColor: '#863441',
+    shadowColor: '#171717',
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3
   },
   inputUsername: {
     paddingLeft: 6,
@@ -123,25 +123,18 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 5,
     fontSize: 46,
-    color: '#e8979a'
+    color: Color.textBrown
   },
   inputboxes: {
     width: 310,
     flexDirection: 'col'
   },
   signUp: {
-    color: 'gray',
+    color: Color.accentGreenDark,
     marginBottom: 20
   },
   signUpText: {
     color: '#e8979a',
-    textDecorationLine: "underline"
-  },
-  logoImage: {
-    width: 250,
-    height: 250,
-    borderRadius: 135,
-    borderColor: '#d8a7a9',
-    borderWidth: 10
+    textDecorationLine: 'underline'
   }
 })

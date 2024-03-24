@@ -8,6 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import Color from '../Color'
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
@@ -27,7 +28,7 @@ export function SignUp ({ setPage }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
+      <Text style={styles.title}>Get Started</Text>
       <View style={styles.inputboxes}>
         <View style={styles.usernamePasswordBox}>
           <MaterialIcons name='alternate-email' size={20} color='#666' />
@@ -50,11 +51,11 @@ export function SignUp ({ setPage }) {
           />
         </View>
         <Text style={styles.logIn}>
-        Have an account?{'  '}
-        <Text style={styles.logInText} onPress={() => setPage('login')}>
-          Login
+          Already have an account?{'  '}
+          <Text style={styles.logInText} onPress={() => setPage('login')}>
+            Login
+          </Text>
         </Text>
-      </Text>
         <View style={styles.LogInBox}>
           <TouchableOpacity style={{ flex: 1 }} onPress={createUser}>
             <Text
@@ -79,8 +80,10 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     marginTop: 6,
     padding: 12,
-    backgroundColor: '#F2F2F2',
-    borderRadius: 10
+    backgroundColor: '#FEFEFE',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#863441'
   },
   LogInBox: {
     alignItems: 'center',
@@ -89,8 +92,14 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     marginTop: 6,
     padding: 12,
-    backgroundColor: '#e8979a',
-    borderRadius: 10
+    backgroundColor: Color.navPink,
+    borderRadius: 10,
+    // borderWidth: 1,
+    // borderColor: '#863441',
+    shadowColor: '#171717',
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3
   },
   inputUsername: {
     paddingLeft: 6,
@@ -108,20 +117,21 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '600',
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 5,
     fontSize: 46,
-    color: '#e8979a'
+    color: Color.textBrown
   },
   inputboxes: {
     width: 310,
     flexDirection: 'col'
   },
   logIn: {
-    color: 'gray',
+    color: Color.accentGreenDark,
     marginBottom: 20
   },
   logInText: {
     color: '#e8979a',
-    textDecorationLine: "underline"
-  },
+    textDecorationLine: 'underline'
+  }
 })
