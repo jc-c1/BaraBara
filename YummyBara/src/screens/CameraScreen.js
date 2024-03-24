@@ -16,7 +16,6 @@ export default function CameraScreen() {
     const cameraRef = useRef(null);
     const navigation = useNavigation();
 
-    const [meal, setMeal] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
 
 
@@ -59,11 +58,6 @@ export default function CameraScreen() {
             try {
                 await MediaLibrary.createAssetAsync(image);
                 setModalVisible(true);
-                //console.log(base64Image);
-                //setBase64Image(null);
-                //setImage(null);
-                //navigation.navigate('Roboflow', { base64: base64Image },);       
-                //base64Image = the base64 of image the app just took!!!!
             } catch (e) {
                 console.log(e);
             }
@@ -78,6 +72,29 @@ export default function CameraScreen() {
 
     return (
         <View style={styles.container}>
+                    {/* Modal for selecting the meal type */}
+
+            <Modal
+                visible={isModalVisible}
+                onRequestClose={() => {
+                setModalVisible(!isModalVisible);
+                }}
+            >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Which meal is this?</Text>
+                {['Breakfast', 'Lunch', 'Dinner', 'Snack'].map((mealType) => (
+                  <TouchableOpacity
+                    key={mealType}
+                    style={styles.mealButton}
+                    onPress={() => handleMealSelection(mealType)}
+                  >
+                    <Text style={styles.textStyle}>{mealType}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+                </View>
+            </Modal>
 
             {/* if image === true, open Camera, else display the Image */}
 
@@ -141,7 +158,7 @@ export default function CameraScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f1f1f1',
+        backgroundColor: '#000000',
         justifyContent: 'center',
     },
     buttonContainer: {

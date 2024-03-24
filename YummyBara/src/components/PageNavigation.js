@@ -1,46 +1,48 @@
-import * as React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Ionicons } from '@expo/vector-icons'
-import { FontAwesome5 } from '@expo/vector-icons'
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
-import Profile from "../screens/Profile"
-import Home from '../screens/Home'
-import CameraScreen from '../screens/CameraScreen'
-import Color from '../components/Color'
+import Profile from "../screens/Profile";
+import Home from '../screens/Home';
+import CameraScreen from '../screens/CameraScreen';
+import Color from '../components/Color';
 import FoodForm from '../screens/FoodForm';
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator();
 
 
 const AddFoodStack = createNativeStackNavigator();
 
-function AddFoodStackScreen () {
+function AddFoodStackScreen() {
   return (
     <AddFoodStack.Navigator>
-      <AddFoodStack.Screen 
+      <AddFoodStack.Screen
         name='CameraScreen'
         component={CameraScreen}
-          options={{
-            tabBarLabel: 'CameraScreen',
-            tabBarIcon: ({ color }) => (
-              
-              <FontAwesome5 name="camera" size={24} color={color} />
-            ),
-            // headerStyle: { backgroundColor: '#d8a7a9' },
-            headerShown: false
-            // headerStyle: { backgroundColor:  Color.navPink }
-          }}
+        options={{
+          tabBarLabel: 'CameraScreen',
+          tabBarIcon: ({ color }) => (
+
+            <FontAwesome5 name="camera" size={24} color={color} />
+          ),
+          // headerStyle: { backgroundColor: '#d8a7a9' },
+          headerShown: false,
+          // headerStyle: { backgroundColor:  Color.navPink }
+        }}
       />
-      <AddFoodStack.Screen 
+      <AddFoodStack.Screen
         name='foodform'
         component={FoodForm}
         options={{
           headerShown: true,
-          headerStyle: { backgroundColor:  Color.navPink },
-          title: "Food Submission"
-        }}/>
+          headerStyle: { backgroundColor: Color.navPink },
+          headerTintColor: '#fff',
+          title: "Food Submission",
+          headerBackTitle: 'Retake',
+        }} />
     </AddFoodStack.Navigator>
   )
 }
@@ -52,25 +54,25 @@ export const PageNavigation = () => {
         screenOptions={{
           tabBarActiveTintColor: Color.gradientWhite,
           tabBarInactiveTintColor: Color.tabPink,
-          tabBarStyle: { backgroundColor:  Color.navPink }
+          tabBarStyle: { backgroundColor: Color.navPink }
         }}
         initialRouteName='Home'
       >
-        
+
         <Tab.Screen
           name='Home'
           component={Home}
           options={{
             tabBarIcon: ({ color }) => (
-              <FontAwesome5 name='home' size={24} color={color} style={styles.icons}/>
+              <FontAwesome5 name='home' size={24} color={color} style={styles.icons} />
             ),
             tabBarLabel: 'Home',
-            headerStyle: { backgroundColor:  Color.navPink }, 
+            headerStyle: { backgroundColor: Color.navPink },
             title: '',
             headerTintColor: Color.gradientWhite,
             headerTitleStyle: {
-            fontWeight: 'bold',
-          },
+              fontWeight: 'bold',
+            },
           }}
         />
         <Tab.Screen
@@ -80,7 +82,7 @@ export const PageNavigation = () => {
             tabBarLabel: 'Add Food',
 
             tabBarIcon: ({ color }) => (
-              
+
               <FontAwesome5 name="camera" size={24} color={color} style={styles.icons} />
             ),
             // headerStyle: { backgroundColor: '#d8a7a9' },
@@ -93,14 +95,14 @@ export const PageNavigation = () => {
           component={Profile}
           options={{
             tabBarIcon: ({ color }) => (
-              <Ionicons name='person-sharp' size={24} color={color} style={styles.icons}/>
+              <Ionicons name='person-sharp' size={24} color={color} style={styles.icons} />
             ),
-            headerStyle: { backgroundColor:  Color.navPink },
+            headerStyle: { backgroundColor: Color.navPink },
             title: 'Profile',
             headerTintColor: Color.gradientWhite,
             headerTitleStyle: {
-            fontWeight: 'bold',
-          },
+              fontWeight: 'bold',
+            },
           }}
         />
       </Tab.Navigator>
