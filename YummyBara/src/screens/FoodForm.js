@@ -29,7 +29,7 @@ const FoodForm = ({route}) => {
         const newFoodList = foodList.filter((item, idx) => idx !== index);
         const newPortionList = portionList.filter((item, idx) => idx !== index);
         setFoodList(newFoodList);
-        setFoodList(newPortionList);
+        setPortionList(newPortionList);
     }
 
     const addFoodItem = () => {
