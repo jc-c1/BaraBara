@@ -37,28 +37,6 @@ const styles = StyleSheet.create({
     padding: 0,
     backgroundColor: '#fffced',
   },
-  title: {
-    backgroundColor: 'rgba(255,255,255,0.6)', // Semi-translucent black background
-    borderRadius: 5,
-    paddingRight: 5,
-    paddingLeft: 5,
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 5,
-    marginTop: -80,
-    marginHorizontal: -50,
-    textAlign: "center",
-  },
-  description: {
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  bgImage: {
-    flex: 1,
-    padding: 100,
-    alignItems: "center",
-    opacity: 0.9,
-  },
   fullText: {
     backgroundColor: 'rgba(255,255,255,0.6)', // Semi-translucent black background
     borderRadius: 15,
@@ -70,7 +48,8 @@ const styles = StyleSheet.create({
   logoImage: {
     width: 250,
     height: 250,
-    marginTop: 60,
+    marginTop: -5,
+    marginBottom: -20,
     alignSelf: 'center',
   },
 });
