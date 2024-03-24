@@ -8,15 +8,15 @@ import { db, auth } from '../config/firebase'
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const FoodForm = ({route}) => {
-    const {imageUri} = route.params;
-    const {food} = route.params; // initial list of foods
-    const {portion} = route.params;
-    const {calories} = route.params;
+    const imageUri = route.params.imageUri;
+    // const {food} = route.params; // initial list of foods
+    // const {portion} = route.params;
+    // const {calories} = route.params;
     const mealOfTheDay = route.params.mealOfTheDay;
     
-    
-    const [foodList, setFoodList] = useState(food);
-    const [portionList, setPortionList] = useState(portion);
+    const [foodList, setFoodList] = useState({});
+    const [portionList, setPortionList] = useState({});
+    const [calorieList, setCalorieList] = useState({});
     const [newFood, setNewFood] = useState('');
     const [newPortion, setNewPortion] = useState('');
   
