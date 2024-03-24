@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { StyleSheet } from 'react-native'
+import Color from '../Color'
 import { db, gAuth } from '../../config/firebase'
 import { onSnapshot, collection, query, where } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
 import { Text, View } from 'react-native'
-
 
 export const UserInfo = (u) => {
 
@@ -47,8 +48,7 @@ export const UserInfo = (u) => {
   return (
     <View>
       {uD ? (
-        <View>
-          
+        <View>        
           <Text>Name: {uD.u.name.first}{" "}{uD.u.name.last}</Text>
           <Text>Joined {"    "} {displayDate} </Text>
         </View>
@@ -58,3 +58,13 @@ export const UserInfo = (u) => {
     </View>
   )
 }
+
+
+const styles = StyleSheet.create({
+  userInfo: {
+    fontSize: 24,
+    alignSelf: 'flex-end',
+    fontWeight: 'bold',
+    color: Color.textBrown,
+  },
+})
