@@ -11,6 +11,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { LogIn } from './logIn'
 import { SignUp } from './signUp'
 import { NavBar } from '../NavBar'
+import Color from "../Color"
 
 import { auth } from '../../config/firebase'
 
@@ -36,6 +37,7 @@ export const Auth = () => {
             ) : (
               <SignUp setPage={setPage} />
             )}
+            
           </View>
         </SafeAreaView>
       </TouchableWithoutFeedback>
@@ -49,6 +51,8 @@ export const Auth = () => {
   return user ? <NavBar /> : toAuth()
 }
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#101820'
+    backgroundColor: Color.grandientOrange,
   },
   preview: {
     marginBottom: -300,
@@ -68,4 +72,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: 200
   }
+
+  
 })
