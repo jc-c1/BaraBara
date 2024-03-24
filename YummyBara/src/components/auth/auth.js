@@ -128,7 +128,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   imageContainer: {
-    paddingTop: 40
+    paddingTop: 20,
+    paddingBot: 30
   },
   alignContainer: {
     alignItems: 'center'

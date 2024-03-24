@@ -51,7 +51,7 @@ export function SignUp ({ setPage }) {
           />
         </View>
         <Text style={styles.logIn}>
-          Already have an account?{'  '}
+        {'  '}Already have an account?{'  '}
           <Text style={styles.logInText} onPress={() => setPage('login')}>
             Login
           </Text>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     color: Color.textBrown
   },
   inputboxes: {
-    width: 310,
+    width: 280,
     flexDirection: 'col'
   },
   logIn: {
