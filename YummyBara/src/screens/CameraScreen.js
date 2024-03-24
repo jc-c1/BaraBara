@@ -1,20 +1,26 @@
-import { Entypo } from '@expo/vector-icons';
-import axios from "axios";
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Modal } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { useNavigation } from '@react-navigation/native';
+import { Entypo } from '@expo/vector-icons';
+import Color from '../components/Color';
+
 
 export default function CameraScreen() {
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
     const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState(null);
     const [image, setImage] = useState(null);
     const [base64Image, setBase64Image] = useState(null);
+    const [type, setType] = useState(Camera.Constants.Type.back);
     const cameraRef = useRef(null);
-    const cameraType = Camera.Constants.Type.back;
-    //const navigation = useNavigation();
+    const navigation = useNavigation();
 
+    const [meal, setMeal] = useState(null);
+    const [isModalVisible, setModalVisible] = useState(false);
+
+
+    //Ask for permission to access Media Library and Camera
     useEffect(() => {
         (async () => {
             const cameraStatus = await Camera.requestCameraPermissionsAsync();
@@ -24,12 +30,14 @@ export default function CameraScreen() {
         })();
     }, [])
 
+
     if (hasCameraPermission === false) {
         return <Text>Requesting camera permissions.</Text>
     } else if (!hasCameraPermission) {
         return <Text>Do not have permission for camera. Please change this in settings.</Text>
     }
 
+    //Take picture, setting uri of the image to Image
     const takePicture = async () => {
         if (cameraRef) {
             try {
@@ -45,15 +53,16 @@ export default function CameraScreen() {
         }
     }
 
-    //Save Image and send base64 to Roboflow
-    const saveImageRobo = async () => {
+    //Save Image, save Image to mediaLibrary
+    const saveImage = async () => {
         if (image) {
             try {
                 await MediaLibrary.createAssetAsync(image);
-                console.log(base64Image);
-                setBase64Image(null);
-                setImage(null);
-                //navigation.navigate('Roboflow', { base64: base64Image },);
+                setModalVisible(true);
+                //console.log(base64Image);
+                //setBase64Image(null);
+                //setImage(null);
+                //navigation.navigate('Roboflow', { base64: base64Image },);       
                 //base64Image = the base64 of image the app just took!!!!
             } catch (e) {
                 console.log(e);
@@ -61,59 +70,78 @@ export default function CameraScreen() {
         }
     }
 
+    const handleMealSelection = (mealType) => {
+        setModalVisible(false);
+        navigation.navigate('NextScreen', { meals: mealType.toLowerCase(), base64: base64Image });
+    };
+
     return (
         <View style={styles.container}>
-            {!image ?
-                <View>
-                    <Camera
-                        style={styles.camera}
-                        type={cameraType}
-                        ref={cameraRef}
-                    ></Camera>
-                    <CameraButton title={'Take a picture'} icon="camera" onPress={takePicture} style={styles.buttonContainer}/>
-                </View>
-                :
-                <>
-                    <Image source={{ uri: image }} style={styles.camera} />
-                    <View style={styles.buttonRow}>
-                        <CameraButton title={'Retake'} icon="retweet" onPress={() => setImage(null)} />
-                        <View style={{ width: 25 }} />
-                        <CameraButton title={'Save and Analyze'} icon="upload" onPress={saveImageRobo} />
-                    </View>
-                </>}
-        </View>
-    )
-}
 
-function CameraButton({ title, onPress, icon, color }) {
-    return (
-        <TouchableOpacity onPress={onPress} style={styles.afterButton}>
-            <Entypo name={icon} size={28} color={color ? color : '#fbf4c0'} />
-            <Text style={styles.text}>{title}</Text>
-        </TouchableOpacity>
-    )
+            {/* if image === true, open Camera, else display the Image */}
+
+            {!image ?
+                <Camera
+                    style={styles.camera}
+                    type={type}
+                    ref={cameraRef}
+                >
+                </Camera>
+                :
+                <Image source={{ uri: image }} style={styles.camera} />
+            }
+            <View style={styles.buttonContainer}>
+
+                {/* if image === true, run takePicture, else either retake or save */}
+
+                {!image ?
+                    <View>
+                        <CameraButton title={'Take a picture'} icon="camera" onPress={takePicture} />
+                    </View>
+                    :
+                    <View>
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={isModalVisible}
+                            onRequestClose={() => {
+                                setModalVisible(!isModalVisible);
+                            }}
+                        >
+                            <View style={styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    <Text style={styles.modalText}>Which meal is this?</Text>
+                                    {['Breakfast', 'Lunch', 'Dinner', 'Snack'].map((mealType) => (
+                                        <TouchableOpacity
+                                            key={mealType}
+                                            style={styles.mealButton}
+                                            onPress={() => handleMealSelection(mealType)}
+                                        >
+                                            <Text style={styles.textStyle}>{mealType}</Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </View>
+                            </View>
+                        </Modal>
+                        <View style={styles.buttonRow}>
+                            <CameraButton title={'Retake'} icon="retweet" onPress={() => setImage(null)} />
+                            <View style={{ width: 30 }} />
+                            <CameraButton title={'Save & Analyze'} icon="upload" onPress={saveImage} />
+                        </View>
+
+                    </View>
+
+                }
+            </View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'Center',
-    },
-    afterButton: {
-        bottom: 50, 
-        borderRadius: 20, 
-        paddingVertical: 10, 
-        paddingHorizontal: 20, 
-        backgroundColor: 'rgba(245, 115, 85,0.5)', 
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-    },
-    text: {
-        fontWeight: 'bold',
-        fontSize: 16,
-        color: '#fbf4e0',
-        marginLeft: 10,
+        backgroundColor: '#f1f1f1',
+        justifyContent: 'center',
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -122,7 +150,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        paddingBottom: 50,
+        paddingBottom: 30,
     },
     camera: {
         flex: 1,
@@ -133,4 +161,71 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-})
+    afterButton: {
+        bottom: 50, // Adjust this value to change the distance from the bottom
+        borderRadius: 20, // Add border radius for a rounded button
+        paddingVertical: 10, // Add padding for better touch area
+        paddingHorizontal: 20, // Add horizontal padding
+        backgroundColor: 'rgba(245, 115, 85,0.5)', // Add a background color to the button
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+    },
+    afterText: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        color: '#fbf4e0',
+        marginLeft: 10,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    mealButton: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+        backgroundColor: Color.gradientPink,
+        marginTop: 10,
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize: 15,
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+        color: Color.textBrown,
+        fontWeight: '800',
+        fontSize: 20,
+    },
+});
+
+
+function CameraButton({ title, onPress, icon, color }) {
+    return (
+        <TouchableOpacity onPress={onPress} style={styles.afterButton}>
+            <Entypo name={icon} size={28} color={color ? color : '#fbf4c0'} />
+            <Text style={styles.afterText}>{title}</Text>
+        </TouchableOpacity>
+    )
+}
