@@ -22,13 +22,20 @@ const FoodForm = ({route}) => {
     useEffect(() => {
         const fetchInfo = async (imageUri) => {
             try {
-                // call kelly's function
+                // call kelly's function with imageUri, then set foodList
+                let infoObj = callKelly(imageUri);
+                setFoodList(infoObj.foodName);
+                setPortionList(infoObj.weightInGrams);
+                setCalorieList(infoObj.calories);
 
             } catch (e) {
                 console.error("failed to fetch data:");
             }
         }
-    })
+
+        fetchInfo(imageUri);
+
+    }, [])
   
 
     const renderRightActions = (index) => {
@@ -47,8 +54,6 @@ const FoodForm = ({route}) => {
         setPortionList(newPortionList);
         setCalorieList(newCalorieList);
     }
-
-
 
   const addFoodItem = async () => {
     if (newFood && newPortion) {
@@ -78,8 +83,8 @@ const FoodForm = ({route}) => {
   }
 
   const saveMeal = async () => {
-    const foodsCol = collection(db, "users", "84j6f5CNnbcVM93x5egq1sUxzpq1", "foods");
-    const calTracksCols = collection(db, "users", "84j6f5CNnbcVM93x5egq1sUxzpq1", "calTracks");
+    const foodsCol = collection(db, "users", "1cUuycqToXScOMULajPx", "foods");
+    const calTracksCols = collection(db, "users", "1cUuycqToXScOMULajPx", "calTracks");
     let mealFoodsId = [];
 
     try {
