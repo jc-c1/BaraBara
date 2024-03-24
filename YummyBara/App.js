@@ -5,7 +5,7 @@ import Home from './src/screens/Home'
 import CalorieGoalBar from './src/components/CalorieGoalBar'
 
 export default function App () {
-  return (<CalorieGoalBar />)
+  return <Auth/>
 }
 
 const styles = StyleSheet.create({
