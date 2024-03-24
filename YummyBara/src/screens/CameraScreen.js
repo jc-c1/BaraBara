@@ -141,7 +141,7 @@ export default function CameraScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f1f1f1',
+        backgroundColor: '#000000',
         justifyContent: 'center',
     },
     buttonContainer: {
