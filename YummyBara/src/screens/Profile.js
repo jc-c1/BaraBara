@@ -8,11 +8,42 @@ import Color from '../components/Color'
 import { UserInfo } from '../components/profile/UserInfo'
 /* global require */
 
-export default function Profile () {
+export default function Profile() {
   const logoImg = require('../../assets/Img/CapybaraLogo.png')
+  const logoObama = require('../../assets/obama.jpeg')
   return (
-    <View>
-      <UserInfo />
+    <View style={styles.container}>
+      <View style={styles.profileCard}>
+        <View style={styles.namePic}>
+
+        <Image source={logoObama}
+          style={styles.logoImage}
+          resizeMode='cover' />
+          <View style={{ width: 15 }} />
+          <View>
+        <UserInfo style={styles.userInfo} />
+        <View style={styles.rowContainer}>
+            <Text style={styles.textLeft1}>Joined</Text>
+            <Text style={styles.textRight1}>Mar 22, 2024</Text>
+            </View>
+        </View>
+        
+
+        </View>
+        
+
+        <View style={styles.rowContainer}>
+            <Text style={styles.textLeft}>Achievement</Text>
+            <Text style={styles.textRight}>-8.7kg</Text>
+        </View>
+
+        <View style={styles.rowContainer}>
+            <Text style={styles.textLeft}>Target Weight</Text>
+            <Text style={styles.textRight}>65.2kg</Text>
+        </View>
+
+      </View>
+
       <View style={styles.Location}>
         <SignOut />
       </View>
@@ -97,9 +128,64 @@ export default function Profile () {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Color.profileBlue,
+  },
   Location: {
     // flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center'
-  }
+  },
+  profileCard: {
+    backgroundColor: '#fffdfa',
+    padding: 20,
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 20,
+    borderRadius: 25,
+    borderWidth: 3,
+    borderColor: '#fcf2e3',
+  },
+  logoImage: {
+    width: 130,
+    height: 130,
+    marginTop: -5,
+    marginBottom: -20,
+    alignSelf: 'flex-start',
+    borderRadius: 25,
+    borderWidth: 4,
+    borderColor: '#eb938d',
+  },
+  rowContainer: {
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textLeft: {
+    color: Color.textBrown,
+    fontSize: 17,
+    fontWeight: '700',
+  },
+  textRight: {
+    color: Color.textBrown,
+    fontSize: 17,
+    fontWeight: '700',
+  },
+  namePic: {
+    flexDirection: 'row',
+    marginBottom: 30,
+    alignItems: 'center',
+    
+  },
+  textLeft1: {
+    color: Color.accentOrange,
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  textRight1: {
+    color: Color.accentOrange,
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  
 })

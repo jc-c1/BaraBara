@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { StyleSheet } from 'react-native'
 import { db } from '../../config/firebase'
 import { onSnapshot, collection, query, where } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
 import { Text, View } from 'react-native'
 import { getAuth } from 'firebase/auth'
+import Color from '../Color'
 
 export const UserInfo = () => {
   const [userData, setUserInfo] = useState(null)
@@ -42,8 +44,8 @@ export const UserInfo = () => {
     <View>
       {userData ? (
         <View>
-          <Text>User Profile</Text>
-          <Text>Name: {userData.name.first} </Text>
+          {/* <Text>User Profile</Text> */}
+          <Text style={styles.userInfo}>{userData.name.first} {userData.name.last}</Text>
         </View>
       ) : (
         <Text>Loading user data...</Text>
@@ -51,3 +53,13 @@ export const UserInfo = () => {
     </View>
   )
 }
+
+
+const styles = StyleSheet.create({
+  userInfo: {
+    fontSize: 24,
+    alignSelf: 'flex-end',
+    fontWeight: 'bold',
+    color: Color.textBrown,
+  },
+})
