@@ -1,50 +1,112 @@
+import { REACT_APP_GEMINI_API_KEY } from '@env';
+import { useState } from 'react';
+import { View, Text, Button } from 'react-native';
+
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-// import { REACT_APP_GEMINI_API_KEY } from "@env";
-// console.log(process.env.REACT_APP_GEMINI_API_KEY);
-
-// Access your API key as an environment variable (see "Set up your API key" above)
-const genAI = new GoogleGenerativeAI("AIzaSyDwMw-gPQUe3c2cEmRyTtMgLFy9gCq-cec");
-// console.log(AIzaSyDwMw-gPQUe3c2cEmRyTtMgLFy9gCq-cec);
-
-// ...
-
-// For text-only input, use the gemini-pro model
+const genAI = new GoogleGenerativeAI(REACT_APP_GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
-// ...
-async function run() {
-    const prompt = "Give the average approximated calories of 50 grams of chicken in the strict format: 'numbers calories'"
+const getCalories = async (volume, food, setCalorieInfo) => {
+  let tryCount = 0;
+  const prompt = `I have ${volume} cm3 of ${food}. Please convert this volume of ${food} into approximated weight and approximated calories. Please send your response in the strict format: '{weightInGrams: number, calories: number}'`;
+  const result = await model.generateContent(prompt);
+  const response = await result.response;
+  const text = await response.text(); 
+
+  console.log("HERE IS THE CONSOLE LOGGED TEXT:", text); 
+  console.log(typeof text);
+
+
+  // Convert the string to a valid JSON string format if necessary
+  str = text.replace(/'/g, '"').replace(/(\w+)(?=:)/g, '"$1"');
+  // Parse the string to an object
+  const obj = JSON.parse(str);
+  // Convert each property to an array containing one item
+  const resultThing = {
+      weightInGrams: [obj.weightInGrams],
+      calories: [obj.calories],
+      foodName: [food]
+  };
+
+  console.log(resultThing);
+
+  // TODO: uncomment return
+  // return resultThing;
+  // TODO: comment below, move function
+  setCalorieInfo(text);
+};
+
+
+const CaloriesComponent = () => {
+  const [calorieInfo, setCalorieInfo] = useState('');
+
+  const handleGetCalories = () => {
+    // Assuming 'volume' and 'food' are available here. Adjust as necessary.
+    volume = 50;
+    food = "apple"
+    getCalories(volume, food, setCalorieInfo);
+  };
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Button title="Get Calories" onPress={handleGetCalories} />
+      <Text>Calorie Info: {calorieInfo}</Text>
+    </View>
+  );
+};
+
+export default CaloriesComponent;
+
+
+
+
+
+
+// // ...
+// async function run() {
+//     const prompt = "Give the average approximated calories of 50 grams of chicken in the strict format: 'numbers calories'"
   
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    console.log(text);
-  }
+//     const result = await model.generateContent(prompt);
+//     const response = await result.response;
+//     const text = response.text();
+//     console.log(text);
+//   }
 
-run();
+// run();
 
-const initializeStory = async (age, hero, themes) => {
-  let tryCount = 0
-  while (tryCount < 3) {
-    try {
-      const response = await cohere.generate({
-        model: 'command',
-        prompt: `Give a json file with the following fields only:\n
-       story: beginning of the bedtime story for a ${age} years old child about the main character ${hero} and ${themes}.
-       question: how should the protagonist continue?\n
-       option1: give one possible choice protagonist can make.\n
-       option2: give another possible choice.`,
-        maxTokens: 300,
-        temperature: 0.9,
-        k: 0,
-        stopSequences: [],
-        returnLikelihoods: 'NONE'
-      })
+// const getCalories = async (volume, food) => {
+//   let tryCount = 0
+//   const prompt = `I have ${volume} cm3 of ${food}. Please convert this volume of ${food} into approximated weight and approximated calories. Please send your response in the strict format: '{weightInGrams: number, calories: number}'`
+//   const result = await model.generateContent(prompt);
+//   const response = await result.response;
+//   const text = response.text();
+//   console.log(text);
 
-      return parseResponse(response.generations[0].text)
-    } catch (e) {
-      console.log(e)
-      tryCount++
-    }
-  }
-}
+//   // while (tryCount < 3) {
+//   //   try {
+//   //     const response = await result.response;
+//   //     const text = response.text();
+//   //     console.log(text);
+
+//   //     return parseResponse(response.generations[0].text)
+//   //   } catch (e) {
+//   //     console.log(e)
+//   //     tryCount++
+//   //   }
+//   // }
+// }
+
+// function parseResponse (response) {
+//   const jsonMatch = response.match(/{[\s\S]*?}/)
+
+//   if (jsonMatch) {
+//     const jsonString = jsonMatch[0]
+//     const jsonObject = JSON.parse(jsonString)
+//     if (!jsonObject.option1 || !jsonObject.option2) {
+//       throw new Error('Improper Response')
+//     }
+//     return jsonObject
+//   } else {
+//     throw new Error('cannot get response')
+//   }
+// }
