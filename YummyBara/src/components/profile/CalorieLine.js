@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { LineChart } from 'react-native-gifted-charts';
 import {CalorieDay} from "./Timeframe/CalorieDay"
 import {CalorieMonth} from "./Timeframe/CalorieMonth"
 import {CalorieWeek} from "./Timeframe/CalorieWeek"
