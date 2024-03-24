@@ -2,25 +2,52 @@ import React from "react";
 import { Image, StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { Swipeable, TextInput } from "react-native-gesture-handler";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Color from '../components/Color';
 import { db, auth } from '../config/firebase'
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-const FoodForm = ({ route }) => {
-  const imageUri = route.params.imageUri;
-  // const {food} = route.params; // initial list of foods
-  // const {portion} = route.params;
-  // const {calories} = route.params;
-  const mealOfTheDay = route.params.mealOfTheDay;
-  console.log(route.params.base64);// CHANGE imageUri TO BASE64 to get the BASE64 IMAGE!!!!!!!!!!!!!!!!
-  console.log(route.params.meals);// SAME W/ MEAL!!!!!!!!!!!!!!!!!!!!
+const FoodForm = ({route}) => {
+    console.log(route.params.meals);
+    const imageUri = route.params.base64;
 
-  const [foodList, setFoodList] = useState(["muffin", "coffee", "tea"]);
-  const [portionList, setPortionList] = useState(["100", "250", "250"]);
-  const [calorieList, setCalorieList] = useState([400, 40, 20]);
-  const [newFood, setNewFood] = useState('');
-  const [newPortion, setNewPortion] = useState('');
+    const mealOfTheDay = route.params.meals;
+    
+    const [foodList, setFoodList] = useState([]);
+    const [portionList, setPortionList] = useState([]);
+    const [calorieList, setCalorieList] = useState([]);
+    const [newFood, setNewFood] = useState('');
+    const [newPortion, setNewPortion] = useState('');
+
+    useEffect(() => {
+        const fetchInfo = async (imageUri) => {
+            try {
+                // call kelly's function
+
+            } catch (e) {
+                console.error("failed to fetch data:");
+            }
+        }
+    })
+  
+
+    const renderRightActions = (index) => {
+        return (
+          <TouchableOpacity onPress={() => deleteItem(index)} style={styles.deleteBox}>
+            <Text> </Text>
+          </TouchableOpacity>
+        );
+    }
+    
+    const deleteItem = (index) => {
+        const newFoodList = foodList.filter((item, idx) => idx !== index);
+        const newPortionList = portionList.filter((item, idx) => idx !== index);
+        const newCalorieList = calorieList.filter((item, idx) => idx !== index);
+        setFoodList(newFoodList);
+        setPortionList(newPortionList);
+        setCalorieList(newCalorieList);
+    }
+
 
 
   const renderRightActions = (index) => {
