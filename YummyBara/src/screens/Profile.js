@@ -32,9 +32,6 @@ export default function Profile () {
               id: user.id
             }))
         
-         
-          
-  
             // console.log(JSON.stringify(qUser))
             const info = qUser[0]
             
@@ -66,6 +63,7 @@ export default function Profile () {
       })
     }, [])
 
+    console.log(calTrack)
 
   return (
 <View>
