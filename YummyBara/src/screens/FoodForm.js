@@ -3,12 +3,16 @@ import { Image, StyleSheet, Text, View, TouchableOpacity, ScrollView} from 'reac
 import { Swipeable, TextInput } from "react-native-gesture-handler";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useState } from 'react';
-import Color from './src/components/Color';
+import Color from '../components/Color';
+import { db, auth } from '../config/firebase'
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const FoodForm = ({route}) => {
     const {imageUri} = route.params;
     const {food} = route.params; // initial list of foods
     const {portion} = route.params;
+    const {calories} = route.params;
+    const mealOfTheDay = route.params.mealOfTheDay;
     
     
     const [foodList, setFoodList] = useState(food);
@@ -28,24 +32,75 @@ const FoodForm = ({route}) => {
     const deleteItem = (index) => {
         const newFoodList = foodList.filter((item, idx) => idx !== index);
         const newPortionList = portionList.filter((item, idx) => idx !== index);
+        const newCalorieList = calorieList.filter((item, idx) => idx !== index);
         setFoodList(newFoodList);
-        setFoodList(newPortionList);
+        setPortionList(newPortionList);
+        setCalorieList(newCalorieList);
     }
 
-    const addFoodItem = () => {
+    const addFoodItem = async () => {
         if (newFood && newPortion) {
+          let newCalorie = await generateCalorie(newFood, newPortion);
           setFoodList([...foodList, newFood]);
           setPortionList([...portionList, newPortion]);
+          setCalorieList([...calorieList, newCalorie]);
           setNewFood('');
           setNewPortion('');
         }
     }
+
+    const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+    const genAI = new GoogleGenerativeAI("AIzaSyDwMw-gPQUe3c2cEmRyTtMgLFy9gCq-cec");
+  
+    const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+  
+    const generateCalorie = async (food, portion) => {
+      const prompt = `give me the calories of ${portion}g of ${food}, just the numbers, your answer should be purely numerical`
+      const result = await model.generateContent(prompt);
+      const resp = await result.response;
+      const text = resp.text();
+      console.log(text);
+  
+      return +text;
+    }
+
+    const saveMeal = async () => {
+        const foodsCol = collection(db, "users", "84j6f5CNnbcVM93x5egq1sUxzpq1", "foods");
+        const calTracksCols = collection(db, "users", "84j6f5CNnbcVM93x5egq1sUxzpq1", "calTracks");
+        let mealFoodsId = [];
     
+        try {
+          for (let i = 0; i < foodList.length; ++i) {
+            const docRef = await addDoc(foodsCol, {
+              dateAdded: serverTimestamp(),
+              foodItem: {
+                calories: calorieList[i],
+                name: foodList[i],
+                portion: portionList[i]
+              }
+            });
+            mealFoodsId = [...mealFoodsId, docRef.id];
+          }
+    
+          await addDoc(calTracksCols, {
+            date: serverTimestamp(),
+            meal: {
+              [mealOfTheDay]: mealFoodsId
+            }
+          })
+    
+    
+        } catch (err) {
+          console.error(err);
+        }
+    
+      }
     
     return (
     
         <ScrollView contentContainerStyle={styles.container}>
-            <Image source={muffin} style={styles.foodImage}/>
+            <Image source={{uri: imageUri}} style={styles.foodImage}/>
               <View style={styles.title}>
                 <Text style={styles.boldText}>Food: </Text>
                 <Text style={styles.boldText}>Portion: </Text>
@@ -70,11 +125,11 @@ const FoodForm = ({route}) => {
                 <TextInput style={styles.input} placeholder='portion in grams' value={newPortion} onChangeText={setNewPortion}></TextInput>
               </View>
               <TouchableOpacity style={styles.button} onPress={addFoodItem}><Text style={{color: 'white'}} >Add</Text></TouchableOpacity>
-              <View style={styles.button}><Text style={{color: 'white'}}>Save Meal</Text></View>
+              <TouchableOpacity style={styles.button} onPress={saveMeal}><Text style={{color: 'white'}}>Save Meal</Text></TouchableOpacity>
               
               </GestureHandlerRootView>
         </ScrollView>
-        );
+    );
 }
 
 const styles = StyleSheet.create({
@@ -94,7 +149,7 @@ const styles = StyleSheet.create({
         height: 250,
         alignSelf: 'flex-start',
         borderWidth: 2,
-        borderColor: Color.tabGreenOutline
+        borderColor: Color.gradientBeige
     },
     foodPanel: {
       padding: 15,
@@ -134,7 +189,7 @@ const styles = StyleSheet.create({
     },
   
     deleteBox: {
-      backgroundColor: 'white', // Temporarily set a background color to ensure visibility
+      backgroundColor: 'white', 
       padding: 10,
     },
   
@@ -143,7 +198,8 @@ const styles = StyleSheet.create({
       borderWidth: 1, 
       padding: 10, 
       borderRadius: 15,
-      margin: 20
+      margin: 20,
+      width: 145,
     },
   
     button: {
@@ -155,4 +211,5 @@ const styles = StyleSheet.create({
       padding: 10,
       margin: 15,
     }
-  }) 
+  })
+  
