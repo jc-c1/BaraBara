@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import {
   StyleSheet,
   View,
-  SafeAreaView,
   TouchableWithoutFeedback,
   Keyboard,
   Image,
@@ -34,7 +33,7 @@ export const Auth = () => {
   const toAuth = () => {
     return (
       <TouchableWithoutFeedback onPress={handleOutsideClick}>
-        <SafeAreaView style={styles.safecontainer}>
+        <View style={styles.safecontainer}>
           <LinearGradient
             // Background Linear Gradient
 
@@ -74,7 +73,7 @@ export const Auth = () => {
               )}
             </View>
           </LinearGradient>
-        </SafeAreaView>
+        </View>
       </TouchableWithoutFeedback>
     )
   }
@@ -90,7 +89,6 @@ const styles = StyleSheet.create({
   safecontainer: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#FFFFFF'
   },
   totalcontainer: {
     flex: 1,
@@ -113,7 +111,7 @@ const styles = StyleSheet.create({
   imageText: {
     color: Color.navPink,
     fontSize: 36,
-    fontFamily: 'Combo',
+    // fontFamily: 'Combo',
     fontWeight: 'bold'
   },
   imageOverlay: {
@@ -130,7 +128,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   imageContainer: {
-    paddingTop: 40
+    paddingTop: 20,
+    paddingBot: 30
   },
   alignContainer: {
     alignItems: 'center'

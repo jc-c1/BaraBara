@@ -52,7 +52,7 @@ export const LogIn = ({ setPage }) => {
         </View>
 
         <Text style={styles.signUp}>
-          Don't have an account? {'  '}
+        {'  '}Don't have an account? {'  '}
           <Text style={styles.signUpText} onPress={() => setPage('signup')}>
             Join us!
           </Text>
@@ -110,13 +110,14 @@ const styles = StyleSheet.create({
   },
   inputPassword: {
     paddingLeft: 6,
-    paddingRight: 12,
+    // paddingRight: 12,
     flex: 1
   },
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+   
   },
   title: {
     fontWeight: '600',
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     color: Color.textBrown
   },
   inputboxes: {
-    width: 310,
+    width: 280,
     flexDirection: 'col'
   },
   signUp: {
