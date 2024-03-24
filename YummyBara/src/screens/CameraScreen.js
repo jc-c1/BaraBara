@@ -62,6 +62,10 @@ export default function CameraScreen() {
         }
     }
 
+    const handleMealSelection = (mealType) => {
+        setModalVisible(false);
+        navigation.navigate('foodform', { meals: mealType.toLowerCase(), base64: base64Image });
+    };
 
     return (
         <View style={styles.container}>

@@ -12,21 +12,35 @@ import FoodForm from '../screens/FoodForm';
 
 const Tab = createBottomTabNavigator()
 
-const MainStack = createNativeStackNavigator()
 
-function MainStackScreen () {
+const AddFoodStack = createNativeStackNavigator();
+
+function AddFoodStackScreen () {
   return (
-    <MainStack.Navigator>
-      <MainStack.Screen
+    <AddFoodStack.Navigator>
+      <AddFoodStack.Screen 
+        name='CameraScreen'
+        component={CameraScreen}
+          options={{
+            tabBarLabel: 'CameraScreen',
+            tabBarIcon: ({ color }) => (
+              
+              <FontAwesome5 name="camera" size={24} color={color} />
+            ),
+            // headerStyle: { backgroundColor: '#d8a7a9' },
+            headerShown: false
+            // headerStyle: { backgroundColor:  Color.navPink }
+          }}
+      />
+      <AddFoodStack.Screen 
         name='foodform'
         component={FoodForm}
         options={{
           headerShown: true,
           headerStyle: { backgroundColor:  Color.navPink },
           title: "Food Submission"
-        }}
-      />
-    </MainStack.Navigator>
+        }}/>
+    </AddFoodStack.Navigator>
   )
 }
 
@@ -41,6 +55,7 @@ export const PageNavigation = () => {
         }}
         initialRouteName='Home'
       >
+        
         <Tab.Screen
           name='Home'
           component={Home}
@@ -58,10 +73,10 @@ export const PageNavigation = () => {
           }}
         />
         <Tab.Screen
-          name='CameraScreen'
-          component={CameraScreen}
+          name='Add a Meal!'
+          component={AddFoodStackScreen}
           options={{
-            tabBarLabel: 'CameraScreen',
+            tabBarLabel: 'Add Food',
             tabBarIcon: ({ color }) => (
               
               <FontAwesome5 name="camera" size={24} color={color} />
