@@ -14,9 +14,9 @@ const FoodForm = ({route}) => {
     // const {calories} = route.params;
     const mealOfTheDay = route.params.mealOfTheDay;
     
-    const [foodList, setFoodList] = useState({});
-    const [portionList, setPortionList] = useState({});
-    const [calorieList, setCalorieList] = useState({});
+    const [foodList, setFoodList] = useState(["muffin", "coffee", "tea"]);
+    const [portionList, setPortionList] = useState(["100", "250", "250"]);
+    const [calorieList, setCalorieList] = useState([400, 40, 20]);
     const [newFood, setNewFood] = useState('');
     const [newPortion, setNewPortion] = useState('');
   
@@ -213,3 +213,4 @@ const styles = StyleSheet.create({
     }
   })
   
+export default FoodForm;

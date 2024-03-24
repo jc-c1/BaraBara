@@ -72,7 +72,8 @@ export default function CameraScreen() {
 
     const handleMealSelection = (mealType) => {
         setModalVisible(false);
-        navigation.navigate('NextScreen', { meals: mealType.toLowerCase(), base64: base64Image });
+        navigation.navigate('foodform', { meals: mealType.toLowerCase(), base64: base64Image });
+
     };
 
     return (
