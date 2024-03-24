@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     padding: 18,
     marginTop: 16,
     marginHorizontal: 14,
-    borderRadius: 20,
+    borderRadius: 25,
     borderColor: Color.tabOutlineYellow,
   },
   containerP: {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     padding: 18,
     marginTop: 16,
     marginHorizontal: 14,
-    borderRadius: 20,
+    borderRadius: 25,
     borderColor: Color.tabOutlinePink,
   },
   rowContainer: {

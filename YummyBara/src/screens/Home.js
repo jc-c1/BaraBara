@@ -3,59 +3,44 @@ import {
   View,
   Text,
   StyleSheet,
+  Image,
   ImageBackground,
   ScrollView,
 } from "react-native";
 import { collection, query, where, getDocs } from "firebase/firestore"; // Make sure all these are imported
 import { db } from "../config/firebase.js"; // Check this path is correct as per your project structure
+import CalorieGoalBar from "../components/CalorieGoalBar.js";
+import CaloriePerMeal from "../components/CaloriePerMeal.js";
+import Color from "../components/Color.js";
 
-function Home({ route }) {
-//   const [storyDetails, setStoryDetails] = useState({});
-//   const storyTitle = route.params.storyTitle; 
-//   const backgroundImage = route.params.backgroundImage;
-
-//   useEffect(() => {
-//     const fetchStoryDetails = async () => {
-//       const q = query(
-//         collection(db, "stories"),
-//         where("Title", "==", storyTitle)
-//       );
-//       const querySnapshot = await getDocs(q);
-
-//       if (!querySnapshot.empty) {
-//         // Assuming each title is unique, there should only be one document in the querySnapshot
-//         const docData = querySnapshot.docs[0].data(); // Get data of the first document
-//         setStoryDetails(docData);
-//       } else {
-//         console.log("No such document!");
-//       }
-//     };
-
-//     fetchStoryDetails();
-//   }, [storyTitle]);
-
-//   return (
-    // <View style={styles.container}>
-    //   <ImageBackground source={backgroundImage} style={styles.bgImage}>
-    //     <Text style={styles.title}>{storyDetails.Title}</Text>
-    //     <ScrollView style={styles.fullText}>
-    //       <Text style={styles.description}>{storyDetails.story}</Text>
-    //     </ScrollView>
-    //   </ImageBackground>
-    // </View>
-//   );
+function Home() {
+  const logoImg = require('../../assets/Img/CapybaraLogo.png')
+  return (
+    <View style={styles.container}>
+      <Image
+        source={logoImg}
+        style={styles.logoImage}
+        resizeMode='cover'
+      />
+      <CalorieGoalBar remain={800} goal={2000} consumed={1200} />
+      <CaloriePerMeal meal="Breakfast" cal={300} />
+      <CaloriePerMeal meal="Lunch" cal={300} />
+      <CaloriePerMeal meal="Dinner" cal={300} />
+      <CaloriePerMeal meal="Snack" cal={300} />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 0,
-    backgroundColor: "#101820",
+    backgroundColor: '#fffced',
   },
   title: {
     backgroundColor: 'rgba(255,255,255,0.6)', // Semi-translucent black background
-    borderRadius: 5, 
-    paddingRight: 5, 
+    borderRadius: 5,
+    paddingRight: 5,
     paddingLeft: 5,
     fontSize: 24,
     fontWeight: "bold",
@@ -76,11 +61,17 @@ const styles = StyleSheet.create({
   },
   fullText: {
     backgroundColor: 'rgba(255,255,255,0.6)', // Semi-translucent black background
-    borderRadius: 15, 
-    padding: 20, 
-    margin: -80, 
+    borderRadius: 15,
+    padding: 20,
+    margin: -80,
     marginTop: 10,
     marginBottom: -40,
+  },
+  logoImage: {
+    width: 250,
+    height: 250,
+    marginTop: 60,
+    alignSelf: 'center',
   },
 });
 
