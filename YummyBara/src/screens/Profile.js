@@ -1,18 +1,75 @@
 // userProfile
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native'
-import { auth, db } from '../config/firebase'
-import { collection, getDocs, query, where } from 'firebase/firestore'
-import { SignOut } from '../components/profile/SignOut'
-import Color from '../components/Color'
+import { gAuth, db } from '../config/firebase'
+import { collection, getDocs, query, where, onSnapshot, doc, getDocFromCache } from 'firebase/firestore'
+import {SignOutButton} from "../components/profile/SignOutButton"
 import { UserInfo } from '../components/profile/UserInfo'
+import {CalorieLine} from "../components/profile/CalorieLine"
+import { onAuthStateChanged } from 'firebase/auth'
+import Color from '../components/Color'
 /* global require */
 
 export default function Profile() {
   const logoImg = require('../../assets/Img/CapybaraLogo.png')
   const logoObama = require('../../assets/obama.jpeg')
+  const [userData, setUserInfo] = useState(null)
+  const [calTrack, setCalTrack] = useState([])
+  
+    useEffect(() => {
+      // Register firebase listeners
+      
+      onAuthStateChanged(gAuth, async(user) => {
+        if (user) {
+          const userCol = collection(db, 'users')
+          const userDoc = query(
+            userCol,
+            where('uid', '==', gAuth.currentUser.uid)
+          )
+          const unsub = onSnapshot(userDoc, async user => {
+          const qUser = user.docs.map(user => ({
+              ...user.data(),
+              id: user.id
+            }))
+        
+            // console.log(JSON.stringify(qUser))
+            const info = qUser[0]
+            
+
+            const docID = info.id
+            
+          
+            // Query a reference to a subcollection
+            const querySnapshot = await getDocs(collection(db, "users", info.id, "calTracks"));
+            
+            let calories = []
+            querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              calories.push(doc.data())
+              
+              // console.log(doc.id, " => ", doc.data());
+            });
+            setCalTrack(calories)
+
+            
+            // console.log(info.name.first)
+            setUserInfo(info)
+          })
+  
+          return () => unsub()
+        } else {
+          setUserInfo({})
+        }
+      })
+    }, [])
+
+    console.log(calTrack)
+
   return (
-    <View style={styles.container}>
+<View>
+    {userData ? (
+      <View>
+      <View style={styles.container}>
       <View style={styles.profileCard}>
         <View style={styles.namePic}>
 
@@ -43,10 +100,15 @@ export default function Profile() {
         </View>
 
       </View>
+      <CalorieLine u = {calTrack}/>
 
       <View style={styles.Location}>
-        <SignOut />
+        <SignOutButton />
       </View>
+    </View>
+    ) : (
+      <Text>Loading user data...</Text>
+    )}
     </View>
   )
   //   const [userDetails, setUserDetails] = useState(null)
@@ -126,6 +188,7 @@ export default function Profile() {
   //     </View>
   //   )
 }
+
 
 const styles = StyleSheet.create({
   container: {

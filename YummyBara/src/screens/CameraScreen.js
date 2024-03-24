@@ -72,6 +72,29 @@ export default function CameraScreen() {
 
     return (
         <View style={styles.container}>
+                    {/* Modal for selecting the meal type */}
+
+            <Modal
+                visible={isModalVisible}
+                onRequestClose={() => {
+                setModalVisible(!isModalVisible);
+                }}
+            >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Which meal is this?</Text>
+                {['Breakfast', 'Lunch', 'Dinner', 'Snack'].map((mealType) => (
+                  <TouchableOpacity
+                    key={mealType}
+                    style={styles.mealButton}
+                    onPress={() => handleMealSelection(mealType)}
+                  >
+                    <Text style={styles.textStyle}>{mealType}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+                </View>
+            </Modal>
 
             {/* if image === true, open Camera, else display the Image */}
 
