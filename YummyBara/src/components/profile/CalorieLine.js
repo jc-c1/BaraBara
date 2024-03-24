@@ -1,18 +1,20 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { LineChart } from 'react-native-gifted-charts';
 import {CalorieDay} from "./Timeframe/CalorieDay"
 import {CalorieMonth} from "./Timeframe/CalorieMonth"
 import {CalorieWeek} from "./Timeframe/CalorieWeek"
 
 export const CalorieLine = (u) => {
   const ref = useRef(null);
-  const calTrack = u.u;
+  const [lineD, setLineD] = useState(null)
+//   console.log(calTrack)
   
-  
-    
-  let lineData = calTrack.map((food) => ({value: food.calories, label: food.date.toDate().toDateString().split(" ")[0]}))
-  console.log(lineData)
+  useEffect(() => {
+    const calTrack = u.u;
+    let lineData = calTrack.map((food) => ({value: food.calories || 2000, label: food.date.toDate().toDateString().split(" ")[0]}))
+    console.log(lineData)
+    setLineD(lineData)
+  },[])
 //   console.log(line)
 
 //   const lineData = [
@@ -34,14 +36,11 @@ export const CalorieLine = (u) => {
   };
 
   return (
-
-
     <View>
-      {/* {lineData ? (
+      {lineD ? (
       <View>
-        
         <View style={{ flexDirection: 'row', marginLeft: 8 }}>
-        {lineData.map((item, index) => {
+        {lineD.map((item, index) => {
           return (
             <TouchableOpacity
               key={index}
@@ -60,7 +59,7 @@ export const CalorieLine = (u) => {
 
       <LineChart
         scrollRef={ref}
-        data={lineData}
+        data={lineD}
         initialSpacing={0}
         yAxisLabels={yAxisLabels}
         yAxisSuffix="calories"
@@ -70,7 +69,7 @@ export const CalorieLine = (u) => {
       </View>) : ( <View>
         <Text>Loading user data...</Text>
         </View>
-      )} */}
+      )}
     </View>
   );
 };

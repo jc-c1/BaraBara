@@ -26,7 +26,6 @@ const FoodForm = ({route}) => {
     useEffect(() => {
       
         const fetchInfo = async (imageUri) => {
-          // const image_data = await FileSystem.readAsStringAsync("/Users/kellychen/Desktop/hackathons/bcsHack2024/BaraBara/YummyBara/assets/IMG_3994.jpg", { encoding: FileSystem.EncodingType.Base64 });
             try {
                 // call kelly's function with imageUri, then set foodList
                 let infoObj = await FoodPrediction(imageUri);
@@ -95,6 +94,7 @@ const FoodForm = ({route}) => {
     const foodsCol = collection(db, "users", "1cUuycqToXScOMULajPx", "foods");
     const calTracksCols = collection(db, "users", "1cUuycqToXScOMULajPx", "calTracks");
     let mealFoodsId = [];
+    let dailyCalories = 0;
 
     try {
       for (let i = 0; i < foodList.length; ++i) {
@@ -106,10 +106,12 @@ const FoodForm = ({route}) => {
             portion: portionList[i]
           }
         });
+        dailyCalories += calorieList[i];
         mealFoodsId = [...mealFoodsId, docRef.id];
       }
 
       await addDoc(calTracksCols, {
+        calories: dailyCalories,
         date: serverTimestamp(),
         meal: {
           [mealOfTheDay]: mealFoodsId
