@@ -8,9 +8,27 @@ import Profile from "../screens/Profile"
 import Home from '../screens/Home'
 import CameraScreen from '../screens/CameraScreen'
 import Color from '../components/Color'
+import FoodForm from '../screens/FoodForm';
 
 const Tab = createBottomTabNavigator()
 
+const MainStack = createNativeStackNavigator()
+
+function MainStackScreen () {
+  return (
+    <MainStack.Navigator>
+      <MainStack.Screen
+        name='foodform'
+        component={FoodForm}
+        options={{
+          headerShown: true,
+          headerStyle: { backgroundColor:  Color.navPink },
+          title: "Food Submission"
+        }}
+      />
+    </MainStack.Navigator>
+  )
+}
 
 export const PageNavigation = () => {
   return (

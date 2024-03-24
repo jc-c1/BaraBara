@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
+import Color from '../components/Color';
 
 
 export default function CameraScreen() {
@@ -14,6 +15,7 @@ export default function CameraScreen() {
     const [type, setType] = useState(Camera.Constants.Type.back);
     const cameraRef = useRef(null);
     const navigation = useNavigation();
+    const [isModalVisible, setModalVisible] = useState(false);
 
     //Ask for permission to access Media Library and Camera
     useEffect(() => {
@@ -53,19 +55,39 @@ export default function CameraScreen() {
         if (image) {
             try {
                 await MediaLibrary.createAssetAsync(image);
-                //console.log(base64Image);
-                //setBase64Image(null);
-                //setImage(null);
-                navigation.navigate('Roboflow', { base64: base64Image },);       
-                //base64Image = the base64 of image the app just took!!!!
+                setModalVisible(true);
             } catch (e) {
                 console.log(e);
             }
         }
     }
 
+
     return (
         <View style={styles.container}>
+                    {/* Modal for selecting the meal type */}
+
+            <Modal
+                visible={isModalVisible}
+                onRequestClose={() => {
+                setModalVisible(!isModalVisible);
+                }}
+            >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Which meal is this?</Text>
+                {['breakfast', 'lunch', 'dinner', 'snack'].map((mealType) => (
+                  <TouchableOpacity
+                    key={mealType}
+                    style={styles.mealButton}
+                    onPress={() => handleMealSelection(mealType)}
+                  >
+                    <Text style={styles.textStyle}>{mealType}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+                </View>
+            </Modal>
 
             {/* if image === true, open Camera, else display the Image */}
 
@@ -138,7 +160,49 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#fbf4e0',
         marginLeft: 10,
-    }
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      mealButton: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+        backgroundColor: Color.gradientPink,
+        marginTop: 10,
+        width: 150
+      },
+      textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+      modalText: {
+        borderRadius: 5,
+        fontSize: 24,
+        color: Color.textBrown,
+        fontWeight: "bold",
+        marginBottom: 15,
+        textAlign: 'center',
+      },
 });
 
 
