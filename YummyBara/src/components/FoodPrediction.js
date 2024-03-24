@@ -38,7 +38,7 @@ const makePrediction = async (image_data) => {
         const response = await fetch(`https://us-central1-aiplatform.googleapis.com/v1/projects/${PROJECT_ID_1}/locations/us-central1/endpoints/${ENDPOINT_ID_2}:predict`, {
                 method: 'POST',
             headers: {
-                'Authorization': `Bearer ${ACCESS_TOKEN}`,  
+                'Authorization': `Bearer ya29.a0Ad52N38uUnrvLlb96TOO4V4d5DBm8LpNEgtkB29dArsG91tXpOLGG0TNqB26PGFI1HwtVcu3nYefGI0YtHqZp9h-Vv5SanGQQDYLhMqNm3y3lpGx6pr0VzLPQFCpwSPrHcLS6e4b2pdolQyWB7f94CCkgcsMBDcyzILiaCgYKAdwSARESFQHGX2Mi__xS_ABpY1n-Tk9hd5x_SQ0171`,  
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(requestBody),
@@ -48,11 +48,12 @@ const makePrediction = async (image_data) => {
 
         if (response.ok) {
             console.log('Prediction result:', jsonResponse);
-            const responseObj = typeof jsonResponse === 'string' ? JSON.parse(jsonResponse) : jsonResponse;
-            const detectedItems = responseObj.predictions[0].displayNames;
+            //const responseObj = typeof jsonResponse === 'string' ? JSON.parse(jsonResponse) : jsonResponse;
+            const detectedItems = jsonResponse.predictions[0].displayNames;
             const firstNonToonieItem = detectedItems.find(item => item !== "toonie");
             console.log('firstItem:', firstNonToonieItem);
             if (firstNonToonieItem) {
+                console.log("AM I HERE");
                 return firstNonToonieItem;
             } else {
                 return "No food detected.";
@@ -69,20 +70,21 @@ const FoodPrediction = async (image_data) => {
     // fake image data, need to uncomment import statement to use
     // const image_data = await FileSystem.readAsStringAsync("/Users/kellychen/Desktop/hackathons/bcsHack2024/BaraBara/YummyBara/assets/IMG_3994.jpg", { encoding: FileSystem.EncodingType.Base64 });
     let food = await makePrediction(image_data);
-    if (food == "No food detected.") {
-        resultObject = {
+    if (food === "No food detected.") {
+        let returnObject = {
             "calories": [],
             "foodName": [],
             "weightInGrams": []
         };
+        console.log(returnObject);
         return returnObject;
     }
     // console.log("Food before giving to Rhoda", food);
     
     let volume = Roboflow(food, image_data);
     // volume = 30;
-    let resultObject = await getCalories(volume, food);
-    console.log("Result Object before returning to Shiyu:", resultObject)
+    let returnObject = await getCalories(volume, food);
+    console.log("Result Object before returning to Shiyu:", returnObject)
     return returnObject;
 };
 

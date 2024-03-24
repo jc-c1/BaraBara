@@ -6,9 +6,12 @@ import { useState, useEffect } from 'react';
 import Color from '../components/Color';
 import { db, auth } from '../config/firebase'
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import FoodPrediction from "../components/FoodPrediction";
+import * as FileSystem from 'expo-file-system';
 
 const FoodForm = ({route}) => {
-    console.log(route.params.meals);
+
+  
     const imageUri = route.params.base64;
 
     const mealOfTheDay = route.params.meals;
@@ -20,16 +23,21 @@ const FoodForm = ({route}) => {
     const [newPortion, setNewPortion] = useState('');
 
     useEffect(() => {
+      
         const fetchInfo = async (imageUri) => {
+          const image_data = await FileSystem.readAsStringAsync("/Users/shiyuli/Desktop/codes/BaraBara/YummyBara/assets/IMG_3994.jpg", { encoding: FileSystem.EncodingType.Base64 });
             try {
                 // call kelly's function with imageUri, then set foodList
-                let infoObj = callKelly(imageUri);
-                setFoodList(infoObj.foodName);
-                setPortionList(infoObj.weightInGrams);
-                setCalorieList(infoObj.calories);
+                let infoObj = await FoodPrediction(image_data);
+                console.log(infoObj);
+                if (infoObj) {
+                  setFoodList(infoObj.foodName);
+                  setPortionList(infoObj.weightInGrams);
+                  setCalorieList(infoObj.calories);
+                }
 
             } catch (e) {
-                console.error("failed to fetch data:");
+                console.error(e);
             }
         }
 
