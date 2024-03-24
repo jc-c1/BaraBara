@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native'
 import { auth, db } from '../config/firebase'
 import { collection, getDocs, query, where } from 'firebase/firestore'
+import { SignOut } from "../components/auth/signOut"
 
 /* global require */
 
 export default function Profile () {
+
+    return (<SignOut/>)
 //   const [userDetails, setUserDetails] = useState(null)
 //   const userUID = auth.currentUser.uid
 //   const backgroundImg = require('../../assets/Img/ProfileBackground.png')

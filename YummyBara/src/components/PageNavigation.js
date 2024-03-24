@@ -7,7 +7,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import Profile from "../screens/Profile"
 import Home from '../screens/Home'
 import CameraScreen from '../screens/CameraScreen'
-
+import Color from '../components/Color'
 
 const Tab = createBottomTabNavigator()
 
@@ -17,9 +17,9 @@ export const PageNavigation = () => {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
-          tabBarActiveTintColor: 'purple',
-          tabBarInactiveTintColor: '#656565',
-          tabBarStyle: { backgroundColor: '#d8a7a9' }
+          tabBarActiveTintColor: Color.gradientWhite,
+          tabBarInactiveTintColor: Color.tabPink,
+          tabBarStyle: { backgroundColor:  Color.navPink }
         }}
         initialRouteName='Home'
       >
@@ -28,22 +28,29 @@ export const PageNavigation = () => {
           component={Home}
           options={{
             tabBarIcon: ({ color }) => (
-              <Ionicons name='library-sharp' size={20} color={color} />
+              <FontAwesome5 name='home' size={24} color={color} />
             ),
             tabBarLabel: 'Home',
-            headerShown: false
+            headerStyle: { backgroundColor:  Color.navPink }, 
+            title: '',
+            headerTintColor: Color.gradientWhite,
+            headerTitleStyle: {
+            fontWeight: 'bold',
+          },
           }}
         />
         <Tab.Screen
-          name='SCameraScreen'
+          name='CameraScreen'
           component={CameraScreen}
           options={{
             tabBarLabel: 'CameraScreen',
             tabBarIcon: ({ color }) => (
-              <FontAwesome5 name='paint-brush' size={24} color={color} />
+              
+              <FontAwesome5 name="camera" size={24} color={color} />
             ),
-            headerStyle: { backgroundColor: '#d8a7a9' },
+            // headerStyle: { backgroundColor: '#d8a7a9' },
             headerShown: false
+            // headerStyle: { backgroundColor:  Color.navPink }
           }}
         />
         <Tab.Screen
@@ -51,9 +58,14 @@ export const PageNavigation = () => {
           component={Profile}
           options={{
             tabBarIcon: ({ color }) => (
-              <Ionicons name='person-sharp' size={20} color={color} />
+              <Ionicons name='person-sharp' size={24} color={color} />
             ),
-            headerStyle: { backgroundColor: '#d8a7a9' }
+            headerStyle: { backgroundColor:  Color.navPink },
+            title: 'Profile',
+            headerTintColor: Color.gradientWhite,
+            headerTitleStyle: {
+            fontWeight: 'bold',
+          },
           }}
         />
       </Tab.Navigator>

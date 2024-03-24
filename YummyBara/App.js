@@ -6,7 +6,8 @@ import CalorieGoalBar from './src/components/CalorieGoalBar'
 import CaloriePerMeal from './src/components/CaloriePerMeal'
 
 export default function App () {
-  return (<CaloriePerMeal meal="Lunch" cal={300} />)
+
+  return <Auth/>
 }
 
 const styles = StyleSheet.create({
