@@ -80,7 +80,7 @@ export default function CameraScreen() {
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <Text style={styles.modalText}>Which meal is this?</Text>
-                {['breakfast', 'lunch', 'dinner', 'snack'].map((mealType) => (
+                {['Breakfast', 'Lunch', 'Dinner', 'Snack'].map((mealType) => (
                   <TouchableOpacity
                     key={mealType}
                     style={styles.mealButton}
