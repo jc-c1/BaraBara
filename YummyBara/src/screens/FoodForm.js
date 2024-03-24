@@ -50,23 +50,6 @@ const FoodForm = ({route}) => {
 
 
 
-  const renderRightActions = (index) => {
-    return (
-      <TouchableOpacity onPress={() => deleteItem(index)} style={styles.deleteBox}>
-        <Text> </Text>
-      </TouchableOpacity>
-    );
-  }
-
-  const deleteItem = (index) => {
-    const newFoodList = foodList.filter((item, idx) => idx !== index);
-    const newPortionList = portionList.filter((item, idx) => idx !== index);
-    const newCalorieList = calorieList.filter((item, idx) => idx !== index);
-    setFoodList(newFoodList);
-    setPortionList(newPortionList);
-    setCalorieList(newCalorieList);
-  }
-
   const addFoodItem = async () => {
     if (newFood && newPortion) {
       let newCalorie = await generateCalorie(newFood, newPortion);
