@@ -13,6 +13,7 @@ const FoodForm = ({route}) => {
 
   
     const imageUri = route.params.base64;
+    const base64ImgUri = `data:image/png;base64,${imageUri}`;
 
     const mealOfTheDay = route.params.meals;
     
@@ -25,10 +26,10 @@ const FoodForm = ({route}) => {
     useEffect(() => {
       
         const fetchInfo = async (imageUri) => {
-          const image_data = await FileSystem.readAsStringAsync("/Users/kellychen/Desktop/hackathons/bcsHack2024/BaraBara/YummyBara/assets/IMG_3994.jpg", { encoding: FileSystem.EncodingType.Base64 });
+          // const image_data = await FileSystem.readAsStringAsync("/Users/kellychen/Desktop/hackathons/bcsHack2024/BaraBara/YummyBara/assets/IMG_3994.jpg", { encoding: FileSystem.EncodingType.Base64 });
             try {
                 // call kelly's function with imageUri, then set foodList
-                let infoObj = await FoodPrediction(image_data);
+                let infoObj = await FoodPrediction(imageUri);
                 console.log(infoObj);
                 if (infoObj) {
                   setFoodList(infoObj.foodName);
@@ -125,7 +126,7 @@ const FoodForm = ({route}) => {
   return (
 
     <ScrollView contentContainerStyle={styles.container}>
-      <Image source={{ uri: imageUri }} style={styles.foodImage} />
+      <Image source={{ uri: base64ImgUri }} style={styles.foodImage} />
       <View style={styles.title}>
         <Text style={styles.boldText}>Food: </Text>
         <Text style={styles.boldText}>Portion: </Text>

@@ -5,6 +5,8 @@ import * as MediaLibrary from 'expo-media-library';
 import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 import Color from '../components/Color';
+import ImageResizer from '@bam.tech/react-native-image-resizer'; // Import the library at the top of your file
+
 
 
 export default function CameraScreen() {
@@ -42,7 +44,7 @@ export default function CameraScreen() {
             try {
                 setBase64Image(null);
                 setImage(null);
-                const options = { quality: 1, base64: true, exif: false };
+                const options = { quality: 0.5, base64: true, exif: false };
                 const data = await cameraRef.current.takePictureAsync(options);
                 setBase64Image(data.base64);
                 setImage(data.uri);
@@ -51,6 +53,32 @@ export default function CameraScreen() {
             }
         }
     }
+
+    // const takePicture = async () => {
+    //     if (cameraRef) {
+    //         try {
+    //             setBase64Image(null);
+    //             setImage(null);
+    //             const options = { quality: 1, base64: true, exif: false };
+    //             const data = await cameraRef.current.takePictureAsync(options);
+    //             const resizedImage = await ImageResizer.createResizedImage(
+    //               `data:image/jpeg;base64,${data.base64}`, // Source URI
+    //               800, // width
+    //               600, // height
+    //               'JPEG', // compress format
+    //               80, // quality
+    //               0, // rotation
+    //               null, // outputPath
+    //               true, // keep meta
+    //             );
+    //             setBase64Image(resizedImage.base64); // Update to use resized base64
+    //             setImage(resizedImage.uri); // Update to use resized URI
+    //         } catch (e) {
+    //             console.log(e);
+    //         }
+    //     }
+    // };
+
 
     //Save Image, save Image to mediaLibrary
     const saveImage = async () => {

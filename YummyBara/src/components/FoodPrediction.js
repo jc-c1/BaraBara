@@ -46,7 +46,6 @@ const makePrediction = async (image_data) => {
         });
 
         const jsonResponse = await response.json();
-
         if (response.ok) {
             console.log('Prediction result:', jsonResponse);
             //const responseObj = typeof jsonResponse === 'string' ? JSON.parse(jsonResponse) : jsonResponse;
