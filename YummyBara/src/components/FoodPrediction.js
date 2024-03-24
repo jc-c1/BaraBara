@@ -1,4 +1,4 @@
-import * as FileSystem from 'expo-file-system';
+// import * as FileSystem from 'expo-file-system';
 import { ACCESS_TOKEN, PROJECT_ID_1, ENDPOINT_ID_1, ENDPOINT_ID_2, REACT_APP_GEMINI_API_KEY } from '@env';
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
@@ -66,7 +66,7 @@ const makePrediction = async (image_data) => {
 };
 
 const FoodPrediction = async (image_data) => {
-    // fake image data:
+    // fake image data, need to uncomment import statement to use
     // const image_data = await FileSystem.readAsStringAsync("/Users/kellychen/Desktop/hackathons/bcsHack2024/BaraBara/YummyBara/assets/IMG_3994.jpg", { encoding: FileSystem.EncodingType.Base64 });
     let food = await makePrediction(image_data);
     if (food == "No food detected.") {
@@ -79,10 +79,8 @@ const FoodPrediction = async (image_data) => {
     }
     // console.log("Food before giving to Rhoda", food);
     
-    // TODO:UNCOMMENT
-    // let volume = callRhoda(food, image_data);
-    // TODO:REMOVE
-    volume = 30;
+    let volume = Roboflow(food, image_data);
+    // volume = 30;
     let resultObject = await getCalories(volume, food);
     console.log("Result Object before returning to Shiyu:", resultObject)
     return returnObject;

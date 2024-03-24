@@ -3,10 +3,10 @@ import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { REACT_APP_ROBOFLOW_API_KEY } from '@env';
 
-export default function Roboflow(props) {
+export default function Roboflow(f, imgD) {
   let coinD = 0;
   const foodWxH = [];
-  const food = props.route.params.food; // CHANGE if food is not the correct variable
+  const food = f // CHANGE if food is not the correct variable
   const toonieDiamter = 2.8; //in cm
   const assumedDepth = 6.0; // in cm
   const pizzaDepth = 1.5; // in cm
@@ -17,7 +17,7 @@ export default function Roboflow(props) {
     const readImage = async () => {
       try {
         // Read the image file
-        const image = props.route.params.base64; // CHANGE if base64 is not the correct variable
+        const image = imgD; // CHANGE if base64 is not the correct variable
 
         // Make HTTP POST request with Axios
         axios({

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import * as FileSystem from 'expo-file-system';
 import { ACCESS_TOKEN, PROJECT_ID_1, ENDPOINT_ID_1, ENDPOINT_ID_2, REACT_APP_GEMINI_API_KEY } from '@env';
 import { View, Text, Button } from 'react-native';
+import { Roboflow } from '../../screens/Roboflow'
 
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
@@ -49,10 +50,10 @@ const YourComponent = () => {
         console.log("Food before giving to Rhoda", food);
         
         // TODO:UNCOMMENT
-        // let volume = callRhoda(food, image_data);
+        let volume = Roboflow(food, image_data);
 
         // TODO:REMOVE
-        volume = 30;
+        // volume = 30;
         let resultObject = await getCalories(volume, food);
         console.log("Result Object before returning to Shiyu:", resultObject)
         // TODO:UNCOMMENT
