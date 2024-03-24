@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as FileSystem from 'expo-file-system';
-import { ACCESS_TOKEN, PROJECT_ID_1, ENDPOINT_ID_1, REACT_APP_GEMINI_API_KEY } from '@env';
+import { ACCESS_TOKEN, PROJECT_ID_1, ENDPOINT_ID_1, ENDPOINT_ID_2, REACT_APP_GEMINI_API_KEY } from '@env';
 import { View, Text, Button } from 'react-native';
 
 
@@ -36,8 +36,16 @@ const YourComponent = () => {
     // const returnToShiyu = async (image_data) => {
     const returnToShiyu = async () => {
         // TODO:REMOVE 
-        const image_data = await FileSystem.readAsStringAsync("/Users/kellychen/Desktop/hackathons/bcsHack2024/BaraBara/YummyBara/assets/burgerSushi.png", { encoding: FileSystem.EncodingType.Base64 });
+        const image_data = await FileSystem.readAsStringAsync("/Users/kellychen/Desktop/hackathons/bcsHack2024/BaraBara/YummyBara/assets/IMG_3994.jpg", { encoding: FileSystem.EncodingType.Base64 });
         let food = await makePrediction(image_data);
+        if (food == "No food detected.") {
+            resultObject = {
+                "calories": [],
+                "foodName": [],
+                "weightInGrams": []
+            };
+            // return returnObject;
+        }
         console.log("Food before giving to Rhoda", food);
         
         // TODO:UNCOMMENT
@@ -49,7 +57,7 @@ const YourComponent = () => {
         console.log("Result Object before returning to Shiyu:", resultObject)
         // TODO:UNCOMMENT
         // return returnObject;
-        setResultObject(resultObject);
+        // setResultObject(resultObject);
     };
 
     const makePrediction = async (image_data) => {
@@ -58,14 +66,15 @@ const YourComponent = () => {
                 { content: image_data }
             ],
             parameters: {
-                confidenceThreshold: 0.2,
+                confidenceThreshold: 0.7,
                 maxPredictions: 5
             }
         };
 
         try {
-            const response = await fetch(`https://us-central1-aiplatform.googleapis.com/v1/projects/${PROJECT_ID_1}/locations/us-central1/endpoints/${ENDPOINT_ID_1}:predict`, {
-                method: 'POST',
+            // const response = await fetch(`https://us-central1-aiplatform.googleapis.com/v1/projects/${PROJECT_ID_1}/locations/us-central1/endpoints/${ENDPOINT_ID_1}:predict`, {
+            const response = await fetch(`https://us-central1-aiplatform.googleapis.com/v1/projects/${PROJECT_ID_1}/locations/us-central1/endpoints/${ENDPOINT_ID_2}:predict`, {
+                    method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${ACCESS_TOKEN}`,  
                     'Content-Type': 'application/json',
@@ -76,7 +85,7 @@ const YourComponent = () => {
             const jsonResponse = await response.json();
 
             if (response.ok) {
-                // setPrediction(jsonResponse);
+                setPrediction(jsonResponse);
                 console.log('Prediction result:', jsonResponse);
                 const responseObj = typeof jsonResponse === 'string' ? JSON.parse(jsonResponse) : jsonResponse;
                 const detectedItems = responseObj.predictions[0].displayNames;
@@ -97,12 +106,11 @@ const YourComponent = () => {
         }
     };
 
-
     //TODO:REMOVE
     return (
         <>
             <Button title="Make Prediction" onPress={returnToShiyu} />
-            {resultObject && <Text>{JSON.stringify(resultObject, null, 2)}</Text>}
+            {prediction && <Text>{JSON.stringify(prediction, null, 2)}</Text>}
         </>
     );
 };
