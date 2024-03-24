@@ -3,9 +3,10 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Auth } from './src/components/auth/auth'
 import Home from './src/screens/Home'
 import CalorieGoalBar from './src/components/CalorieGoalBar'
+import CaloriePerMeal from './src/components/CaloriePerMeal'
 
 export default function App () {
-  return (<CalorieGoalBar />)
+  return (<CaloriePerMeal meal="Lunch" cal={300} />)
 }
 
 const styles = StyleSheet.create({
