@@ -15,7 +15,7 @@ export default function Roboflow( props ) {
             // Make HTTP POST request with Axios
             axios({
               method: 'POST',
-              url: 'https://detect.roboflow.com/food-items-with-reference-objects/3',
+              url: 'https://detect.roboflow.com/food-items-with-reference-objects/4',
               params: {
                 api_key: REACT_APP_ROBOFLOW_API_KEY,
               },
