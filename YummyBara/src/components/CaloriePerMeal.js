@@ -1,11 +1,11 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Color from './Color';
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import Color from './Color'
 
 // Call <CaloriePerMeal meal="Snack" cal={300} /> from Home Screen!!!!!
 // Replace "snack" and {300} w/ the correct values
 
-const CaloriePerMeal = (props) => {
+const CaloriePerMeal = props => {
   return (
     <View>
       {props.meal === 'Breakfast' || props.meal === 'Dinner' ? (
@@ -24,8 +24,8 @@ const CaloriePerMeal = (props) => {
         </View>
       )}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   containerY: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginHorizontal: 14,
     borderRadius: 25,
-    borderColor: Color.tabOutlineYellow,
+    borderColor: Color.tabOutlineYellow
   },
   containerP: {
     backgroundColor: Color.tabPink,
@@ -44,22 +44,22 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginHorizontal: 14,
     borderRadius: 25,
-    borderColor: Color.tabOutlinePink,
+    borderColor: Color.tabOutlinePink
   },
   rowContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   textLeft: {
     color: Color.textBrown,
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   textRight: {
     color: Color.textBrown,
     fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
+    fontWeight: 'bold'
+  }
+})
 
-export default CaloriePerMeal;
+export default CaloriePerMeal
