@@ -131,7 +131,7 @@ const FoodForm = ({route}) => {
       <Image source={{ uri: base64ImgUri }} style={styles.foodImage} />
       <View style={styles.title}>
         <Text style={styles.boldText}>Food: </Text>
-        <Text style={styles.boldText}>Portion: </Text>
+        <Text style={styles.boldText}>Calories: </Text>
       </View>
       <GestureHandlerRootView style={{ flex: 1 }}>
         {foodList.map((item, index) => {
@@ -142,7 +142,7 @@ const FoodForm = ({route}) => {
                   <Text style={styles.regText}>{item}</Text>
                 </View>
                 <View style={styles.portionPanel}>
-                  <Text style={styles.regText}>{portionList[index]}</Text>
+                  <Text style={styles.regText}>{calorieList[index]}</Text>
                 </View>
               </View>
             </Swipeable>
@@ -152,7 +152,7 @@ const FoodForm = ({route}) => {
           <TextInput style={styles.input} placeholder='food item' value={newFood} onChangeText={setNewFood}></TextInput>
           <TextInput style={styles.input} placeholder='portion in grams' value={newPortion} onChangeText={setNewPortion}></TextInput>
         </View>
-        <TouchableOpacity style={styles.button} onPress={addFoodItem}><Text style={{ color: 'white' }} >Add</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={addFoodItem}><Text style={{ color: 'white' }} >Get Calories</Text></TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={saveMeal}><Text style={{ color: 'white' }}>Save Meal</Text></TouchableOpacity>
 
       </GestureHandlerRootView>

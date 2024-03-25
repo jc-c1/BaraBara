@@ -22,11 +22,11 @@ function Home() {
         style={styles.logoImage}
         resizeMode='cover'
       />
-      <CalorieGoalBar remain={800} goal={2000} consumed={1200} />
-      <CaloriePerMeal meal="Breakfast" cal={300} />
-      <CaloriePerMeal meal="Lunch" cal={300} />
-      <CaloriePerMeal meal="Dinner" cal={300} />
-      <CaloriePerMeal meal="Snack" cal={300} />
+      <CalorieGoalBar remain={38} goal={2712} consumed={2674} />
+      <CaloriePerMeal meal="Breakfast" cal={255} />
+      <CaloriePerMeal meal="Lunch" cal={830} />
+      <CaloriePerMeal meal="Dinner" cal={1482} />
+      <CaloriePerMeal meal="Snack" cal={107} />
     </View>
   )
 }
