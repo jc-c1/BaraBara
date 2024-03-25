@@ -89,6 +89,7 @@ import { REACT_APP_ROBOFLOW_API_KEY } from '@env';
 async function calculateFoodVolume(food, imgData) {
     const toonieDiameter = 2.8; // in cm
     const assumedDepth = 6.0; // in cm
+    const bananaDepth = 2.5; //in cm
     const pizzaDepth = 1.5; // in cm
     let coinDiameter = 0;
     const foodWidthHeight = [];
@@ -121,9 +122,11 @@ async function calculateFoodVolume(food, imgData) {
         let volume;
         if (food.toLowerCase() === "pizza") {
             volume = ((foodScaledWidth * foodScaledHeight * pizzaDepth) / 2).toFixed(2); // Pizza assumed to be a semi-circle
-            console.log(volume)
-          } else {
-            volume = (foodScaledWidth * foodScaledHeight * assumedDepth).toFixed(2); // Other food types assumed to be rectangular prisms
+            // console.log(volume)
+          } else if (food.toLowerCase() === "banana") {
+            volume = (foodScaledWidth * foodScaledHeight * bananaDepth).toFixed(2); // Other food types assumed to be rectangular prisms
+        } else {
+            volume = (foodScaledWidth * foodScaledHeight * assumedDepth).toFixed(2);
         }
 
         return volume; // Return only the volume for further processing

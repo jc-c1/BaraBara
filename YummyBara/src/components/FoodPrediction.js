@@ -8,6 +8,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
 const getCalories = async (volume, food) => {
     const prompt = `I have ${volume} cm3 of ${food}. Please convert this volume of ${food} into approximated weight and approximated calories. If you don't have the exact information, please give your best guess and do not request clarification. Please send your response in the strict format: '{weightInGrams: number, calories: number}'`;
+    // const prompt = `I have one ${food}. Please give me the approximated weight and approximated calories. If you don't have the exact information, please give your best guess and do not request clarification. Please send your response in the strict format: '{weightInGrams: number, calories: number}'`;
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = await response.text(); 
@@ -29,13 +30,12 @@ const makePrediction = async (image_data) => {
             { content: image_data }
         ],
         parameters: {
-            confidenceThreshold: 0.7,
-            maxPredictions: 5
+            confidenceThreshold: 0.3,
+            maxPredictions: 2
         }
     };
 
     try {
-        // const response = await fetch(`https://us-central1-aiplatform.googleapis.com/v1/projects/${PROJECT_ID_1}/locations/us-central1/endpoints/${ENDPOINT_ID_1}:predict`, {
         const response = await fetch(`https://us-central1-aiplatform.googleapis.com/v1/projects/${PROJECT_ID_1}/locations/us-central1/endpoints/${ENDPOINT_ID_2}:predict`, {
                 method: 'POST',
             headers: {
@@ -53,7 +53,7 @@ const makePrediction = async (image_data) => {
             const firstNonToonieItem = detectedItems.find(item => item !== "toonie");
             console.log('firstItem:', firstNonToonieItem);
             if (firstNonToonieItem) {
-                console.log("AM I HERE");
+                console.log("FOOD ITEM DETECTED!!");
                 return firstNonToonieItem;
             } else {
                 return "No food detected.";
@@ -81,16 +81,12 @@ const FoodPrediction = async (image_data) => {
     }
     // console.log("Food before giving to Rhoda", food);
     
-    // let volume = await Roboflow(food, image_data);
-
     const volume = await calculateFoodVolume(food, image_data);
     if (volume) {
         console.log(`Volume: ${volume} cm³`);
     } else {
         console.log("Failed to calculate volume.");
     }
-
-    // volume = 30;
     let returnObject = await getCalories(volume, food);
     console.log("Result Object before returning to Shiyu:", returnObject)
     return returnObject;
