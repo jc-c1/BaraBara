@@ -17,11 +17,19 @@ function Home() {
   const logoImg = require('../../assets/Img/CapybaraLogo.png')
   return (
     <View style={styles.container}>
+      <View style={styles.imageContainer}>
       <Image
         source={logoImg}
         style={styles.logoImage}
         resizeMode='cover'
       />
+        <View style={styles.alignContainer}>
+                <View style={styles.imageOverlay}>
+                  <Text style={styles.imageText}>YummyBara</Text>
+                </View>
+              </View>
+              </View>
+
       <CalorieGoalBar remain={38} goal={2712} consumed={2674} />
       <CaloriePerMeal meal="Breakfast" cal={255} />
       <CaloriePerMeal meal="Lunch" cal={830} />
@@ -47,10 +55,36 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     width: 250,
-    height: 250,
+    height: 220,
     marginTop: -5,
-    marginBottom: -20,
+    marginBottom: 0,
     alignSelf: 'center',
+  },
+  imageOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    alignItems: 'center',
+    width: 200,
+    height: 40,
+    backgroundColor: Color.gradientWhite,
+    borderRadius: 30,
+    shadowColor: Color.gradientPink,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    justifyContent: 'center'
+  },
+  imageContainer: {
+    paddingTop: 20,
+    paddingBot: 30
+  },
+  alignContainer: {
+    alignItems: 'center'
+  },
+  imageText: {
+    color: Color.navPink,
+    fontSize: 23,
+    // fontFamily: 'Combo',
+    fontWeight: 'bold'
   },
 });
 

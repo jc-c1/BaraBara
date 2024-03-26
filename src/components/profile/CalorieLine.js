@@ -4,6 +4,7 @@ import {CalorieDay} from "./Timeframe/CalorieDay"
 import {CalorieMonth} from "./Timeframe/CalorieMonth"
 import {CalorieWeek} from "./Timeframe/CalorieWeek"
 import { LineChart } from 'react-native-gifted-charts';
+import Color from "../Color"
 
 
 
@@ -20,6 +21,8 @@ export const CalorieLine = (u) => {
  },[])
 //   console.log(line)
 
+console.log("aaa")
+console.log(lineD)
 
 //   const lineData = [
 //     { value: 4, label: 'Mon' },
@@ -31,8 +34,9 @@ export const CalorieLine = (u) => {
 //     { value: 14, label: 'Sun' },
 //   ];
 
+const chartLabel = [{label: "Day"}, {label: "Week"}, {label: "Month"}]
 
- const yAxisLabels = [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000];
+const yAxisLabels = ["0", "500", "1000", "1500", "2000", "2500", "3000"];
 
 
  const showOrHidePointer = (ind) => {
@@ -46,19 +50,19 @@ export const CalorieLine = (u) => {
    <View>
      {lineD ? (
      <View style={styles.container}>
-       <View style={{ flexDirection: 'row', marginLeft: 8}}>
-       {lineD.map((item, index) => {
+       <View style={{ flexDirection: 'row', marginLeft: 120}}>
+       {chartLabel.map((item, index) => {
          return (
            <TouchableOpacity
              key={index}
              style={{
                padding: 6,
                margin: 4,
-               backgroundColor: '#ebb',
+               backgroundColor: Color.accentGreenDark,
                borderRadius: 8,
              }}
              onPress={() => showOrHidePointer(index)}>
-             <Text>{item.label}</Text>
+             <Text style={{color: "white",}}>{item.label}</Text>
            </TouchableOpacity>
          );
        })}
@@ -68,9 +72,18 @@ export const CalorieLine = (u) => {
      <LineChart
        scrollRef={ref}
        data={lineD}
+       color = {Color.accentGreenLight}
        initialSpacing={0}
-       yAxisLabels={yAxisLabels}
+       maxValue={3000}
+       dataPointsColor={Color.accentGreenDark}
+       yAxisColor="#0BA5A4"
+       xAxisColor="#0BA5A4"
+       noOfSections = {7}
+       stepValue = {500}
        yAxisSuffix="calories"
+       xAxisIndicesColor = {Color.accentGreenDark}
+       yAxisIndicesColor = {Color.accentGreenDark}
+       xAxisIndicesWidth= {2}
        rotateLabel
      />
     
