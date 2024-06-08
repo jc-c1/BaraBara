@@ -1,3 +1,6 @@
+[![Link to YummyBara Youtube Demo](https://img.youtube.com/vi/8ye5EbyPvg8/0.jpg)](https://www.youtube.com/watch?v=8ye5EbyPvg8)
+
+
 ## Inspiration
 According to Statistic Canada, 3.7 Millions of Canadians were living with diabetes in 2020-2021. As stressed out computer science students, we have been putting on weight over the past semester ourselves. Previously, calories tracking has been extremely instrumental in keeping one of our member's diet healthy when she embarked on her weight loss journey; however, unfortunately, currently existing applications are fairly tedious to operate which do not encourage long term sustainability of good habits. With the recent innovative development in image recognition and AI/LLM technologies, our team was inspired to utilize these tools to lessen obstacles for user to a healthy diet and lifestyle!  
 
