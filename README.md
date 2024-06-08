@@ -44,5 +44,33 @@ As beginners, we are just so proud of stepping out of our comfort zone, diving i
 - Favourite foods functionality
 - Multilingual support    
   
-  
+# How to run
+
+## Setup environment variables 
+
+Dreamland relies on environment variables to appropriately configure its dependencies. To properly run, create a `.env` file will the following environment variables.
+
+```
+REACT_APP_FIREBASE_API_KEY=...
+REACT_APP_FIREBASE_AUTH_DOMAIN=...
+REACT_APP_FIREBASE_PROJECT_ID=...
+REACT_APP_FIREBASE_STORAGE_BUCKET=...
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=...
+REACT_APP_FIREBASE_APPID=...
+REACT_APP_OPENAI_API_KEY=...
+REACT_APP_COHERE_API_KEY=...
+```
+
+## Install dependencies
+
+Dreamland uses `npm` for dependency management.
+
+Run `npm install` to install all dependencies locally
+
+## Run the app
+
+Run the app by running `npm start`.
+
 <strong> Hope you like our app! :) Feel free to leave any feedback in the comment section!</strong> 
+
+
